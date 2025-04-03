@@ -1,0 +1,46 @@
+package zed.rainxch.plscribbledash.presentation.screens.main.components
+
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
+import zed.rainxch.plscribbledash.presentation.core.navigation.NavGraph
+import zed.rainxch.plscribbledash.presentation.screens.game.GameScreen
+import zed.rainxch.plscribbledash.presentation.screens.gameMode.GameModeScreen
+import zed.rainxch.plscribbledash.presentation.screens.home.HomeScreen
+import zed.rainxch.plscribbledash.presentation.screens.test.Test
+
+@Composable
+fun AppNavigation(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    NavHost(
+        navController = navController,
+        startDestination = NavGraph.Home,
+        modifier = modifier.fillMaxSize()
+    ) {
+        composable<NavGraph.Home> {
+            HomeScreen(navController)
+        }
+        composable<NavGraph.Test> {
+            Test()
+        }
+
+        composable<NavGraph.GameModeScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<NavGraph.GameModeScreen>()
+            GameModeScreen(
+                navController = navController,
+                gameMode = args.gameMode
+            )
+        }
+
+        composable<NavGraph.GameScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<NavGraph.GameScreen>()
+            GameScreen(navController, args.difficultyLevel)
+        }
+    }
+}
