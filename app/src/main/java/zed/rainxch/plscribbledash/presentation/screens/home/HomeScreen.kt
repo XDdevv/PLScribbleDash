@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -51,12 +52,13 @@ fun HomeScreen(
             ) {
                 DisplayMediumText(
                     text = "Start drawing!",
-                    textColor = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 BodyMediumText(
                     text = "Select game mode",
-                    textColor = MaterialTheme.colorScheme.onSurface
+                    textColor = MaterialTheme.colorScheme.onSurface,
+                    align = TextAlign.Center
                 )
             }
             Spacer(modifier = Modifier.height(24.dp))

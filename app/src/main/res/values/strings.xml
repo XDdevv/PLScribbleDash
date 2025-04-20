@@ -1,3 +1,36 @@
 <resources>
-    <string name="app_name">PLScribbleDash</string>
+    <!--  Oops - Meh Feedback  -->
+    <string name="feedback_oops_1">Looks like Picasso had a rough day!</string>
+    <string name="feedback_oops_2">Is this a drawing or a modern art statement? Either way, I\'m confused!</string>
+    <string name="feedback_oops_3">I didn\'t know stick figures could have such deep emotions!</string>
+    <string name="feedback_oops_4">This is what happens when you let a cat hold the pencil!</string>
+    <string name="feedback_oops_5">Did you use a potato for inspiration? Because this is a-peeling!</string>
+    <string name="feedback_oops_6">If this was a treasure map, I\'d be lost for sure!</string>
+    <string name="feedback_oops_7">I see you\'re going for the \'abstract\' look. Mission accomplished!</string>
+    <string name="feedback_oops_8">Is this a drawing or a game of Pictionary gone wrong?</string>
+    <string name="feedback_oops_9">I can see the effort… right next to the confusion!</string>
+    <string name="feedback_oops_10">This masterpiece is brought to you by the letter \'W\' for \'What is that?\'</string>
+    <!--  Good - Great Feedback  -->
+    <string name="feedback_good_1">Not bad! Just a few more practice sessions and you might rival Picasso!</string>
+    <string name="feedback_good_2">Almost there! With a little more practice, you\'ll be the next Van Gogh—minus the ear incident!</string>
+    <string name="feedback_good_3">Good effort! Just remember, even the best artists had their \'meh\' days!</string>
+    <string name="feedback_good_4">Solid attempt! Just think of this as your warm-up sketch for greatness!</string>
+    <string name="feedback_good_5">You\'re on the right track! Just a few more strokes and you\'ll be a legend!</string>
+    <string name="feedback_good_6">Nice try! With a little more practice, you\'ll be drawing like a pro in no time!</string>
+    <string name="feedback_good_7">Great start! Just remember, every masterpiece begins with a little chaos!</string>
+    <string name="feedback_good_8">Not too shabby! Keep at it, and soon you\'ll be the talk of the art world!</string>
+    <string name="feedback_good_9">Good job! Just think of this as a stepping stone to your future art career!</string>
+    <string name="feedback_good_10">You\'ve got potential! With a bit more doodling, you\'ll be unstoppable!</string>
+    <!--  Woohoo Feedback  -->
+    <string name="feedback_woohoo_1">Wow, did you just summon the spirit of Michelangelo?</string>
+    <string name="feedback_woohoo_2">This is so good, I\'m convinced you have a secret art degree!</string>
+    <string name="feedback_woohoo_3">If this was a competition, you\'d be the reigning champion of awesomeness!</string>
+    <string name="feedback_woohoo_4">Is this a drawing or a portal to another dimension? Because I\'m ready to step through!</string>
+    <string name="feedback_woohoo_5">You\'ve officially raised the bar! I\'m going to need a ladder to reach it!</string>
+    <string name="feedback_woohoo_6">This is so impressive, I\'m pretty sure it just became the new Mona Lisa!</string>
+    <string name="feedback_woohoo_7">If this were a food, it would be a gourmet meal—deliciously artistic!</string>
+    <string name="feedback_woohoo_8">You\'ve got skills! I\'m starting to think you might be a wizard with that pencil!</string>
+    <string name="feedback_woohoo_9">This drawing deserves its own fan club! Can I be the president?</string>
+    <string name="feedback_woohoo_10">Is there a gallery nearby? Because this masterpiece needs to be on display!</string>
+    <string name="app_name">Scribble dash</string>
 </resources>

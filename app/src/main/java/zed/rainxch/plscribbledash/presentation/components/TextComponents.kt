@@ -5,7 +5,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -26,12 +28,12 @@ fun DisplayLargeText(
 @Composable
 fun DisplayMediumText(
     text: String,
-    textColor: Color,
+    color: Color,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
-        color = textColor,
+        color = color,
         modifier = modifier,
         style = MaterialTheme.typography.displayMedium,
         fontSize = 40.sp
@@ -41,13 +43,13 @@ fun DisplayMediumText(
 @Composable
 fun HeadlineLargeText(
     text: String,
-    textColor: Color,
+    color: Color,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         modifier = modifier,
-        color = textColor,
+        color = color,
         style = MaterialTheme.typography.headlineLarge,
         fontSize = 34.sp
     )
@@ -78,6 +80,7 @@ fun HeadlineSmallText(
         text = text,
         modifier = modifier,
         color = textColor,
+        textAlign = TextAlign.Center,
         style = MaterialTheme.typography.headlineSmall,
         fontSize = 18.sp
     )
@@ -118,6 +121,7 @@ fun BodyLargeText(
 fun BodyMediumText(
     text: String,
     textColor: Color,
+    align: TextAlign,
     modifier: Modifier = Modifier
 ) {
     Text(
@@ -126,19 +130,20 @@ fun BodyMediumText(
         color = textColor,
         style = MaterialTheme.typography.bodyMedium,
         fontSize = 16.sp,
+        textAlign = align
     )
 }
 
 @Composable
 fun BodySmallText(
     text: String,
-    textColor: Color,
+    color: Color,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         modifier = modifier,
-        color = textColor,
+        color = color,
         style = MaterialTheme.typography.bodySmall,
         fontSize = 14.sp,
     )
@@ -148,13 +153,13 @@ fun BodySmallText(
 @Composable
 fun LabelXLargeText(
     text: String,
-    textColor: Color,
+    color: Color,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         modifier = modifier,
-        color = textColor,
+        color = color,
         style = MaterialTheme.typography.labelLarge,
         fontWeight = FontWeight.SemiBold,
         fontSize = 24.sp,

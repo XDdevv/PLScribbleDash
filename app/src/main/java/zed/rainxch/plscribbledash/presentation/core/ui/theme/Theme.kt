@@ -256,7 +256,7 @@ val unspecified_scheme = ColorFamily(
 
 @Composable
 fun PLScribbleDashTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean = false,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = false,
     content: @Composable() () -> Unit

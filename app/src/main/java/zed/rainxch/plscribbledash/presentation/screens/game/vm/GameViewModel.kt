@@ -6,14 +6,24 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import zed.rainxch.plscribbledash.domain.model.PaintPath
+import zed.rainxch.plscribbledash.domain.model.ParsedPath
 import zed.rainxch.plscribbledash.domain.use_case.AddPathsUseCase
 import zed.rainxch.plscribbledash.domain.use_case.ClearPathsUseCase
-import zed.rainxch.plscribbledash.domain.use_case.GetPathsUseCase
+import zed.rainxch.plscribbledash.domain.use_case.GetGamePathsUseCase
+import zed.rainxch.plscribbledash.domain.use_case.GetGameScoreUseCase
+import zed.rainxch.plscribbledash.domain.use_case.GetRandomPathDataUseCase
 import zed.rainxch.plscribbledash.domain.use_case.RedoPathsUseCase
 import zed.rainxch.plscribbledash.domain.use_case.UndoPathsUseCase
+import zed.rainxch.plscribbledash.presentation.core.model.DifficultyLevelOptions
+import zed.rainxch.plscribbledash.presentation.core.model.GameState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +32,9 @@ class GameViewModel @Inject constructor(
     private val undoPathUseCase: UndoPathsUseCase,
     private val redoPathUseCase: RedoPathsUseCase,
     private val clearPathsUseCase: ClearPathsUseCase,
-    getPathsUseCase: GetPathsUseCase
+    private val getRandomPathDataUseCase: GetRandomPathDataUseCase,
+    private val getGameScoreUseCae: GetGameScoreUseCase,
+    getPathsUseCase: GetGamePathsUseCase
 ) : ViewModel() {
 
     val paths: StateFlow<List<PaintPath>> = getPathsUseCase()
@@ -38,6 +50,45 @@ class GameViewModel @Inject constructor(
     val strokeWidth: State<Float> = _strokeWidth
 
     private val _isDrawing = mutableStateOf(false)
+
+    private var _gameState: MutableStateFlow<GameState> = MutableStateFlow(GameState.PREVIEW)
+    val gameState = _gameState.asStateFlow()
+
+    private var _timer: MutableStateFlow<Int> = MutableStateFlow(3)
+    val timer = _timer.asStateFlow()
+
+    private var _randomPath: MutableStateFlow<ParsedPath?> = MutableStateFlow(null)
+    val randomPath = _randomPath.asStateFlow()
+
+    init {
+        getRandomPath()
+        startGame()
+        startTimer()
+    }
+
+    private fun getRandomPath() {
+        viewModelScope.launch {
+            _randomPath.emit(getRandomPathDataUseCase())
+        }
+    }
+
+    private fun startGame() {
+        viewModelScope.launch {
+            delay(3000)
+            _gameState.emit(GameState.PLAY)
+        }
+    }
+
+    private fun startTimer() {
+        viewModelScope.launch {
+            delay(1000)
+            _timer.emit(2)
+            delay(1000)
+            _timer.emit(1)
+            delay(1000)
+            _timer.emit(0)
+        }
+    }
 
     fun onTouchStart(offset: Offset) {
         _isDrawing.value = true
@@ -82,6 +133,17 @@ class GameViewModel @Inject constructor(
 
     fun onClear() {
         clearPathsUseCase()
+    }
+
+    fun onFinish(difficultyLevelOption: DifficultyLevelOptions) {
+        viewModelScope.launch {
+            val score = getGameScoreUseCae(
+                userPaths = paths.value,
+                exampleParsedPath = randomPath.value ?: ParsedPath(emptyList(), 0, 0, 0f, 0f),
+                difficultyLevelOption
+            )
+            randomPath.value?.let { _gameState.emit(GameState.FINISHED(score, it)) }
+        }
     }
 
 }

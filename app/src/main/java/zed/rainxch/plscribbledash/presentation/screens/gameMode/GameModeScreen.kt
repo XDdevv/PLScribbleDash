@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -67,12 +68,13 @@ fun GameModeScreen(
 
                 DisplayMediumText(
                     text = "Start drawing!",
-                    textColor = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 BodyMediumText(
                     text = "Choose a difficulty setting",
-                    textColor = MaterialTheme.colorScheme.onBackground
+                    textColor = MaterialTheme.colorScheme.onBackground,
+                    align = TextAlign.Center
                 )
             }
         }

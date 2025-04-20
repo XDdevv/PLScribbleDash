@@ -10,7 +10,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     fun bottomNavAllowedScreenList(): List<NavGraph> {
         return listOf(
             NavGraph.Home,
-            NavGraph.Test,
+            NavGraph.Statistics,
         )
     }
 

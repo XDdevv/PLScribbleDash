@@ -1,9 +1,9 @@
 package zed.rainxch.plscribbledash.presentation.core.navigation
 
 import kotlinx.serialization.Serializable
-import zed.rainxch.plscribbledash.presentation.core.model.DifficultyLevelItem
 import zed.rainxch.plscribbledash.presentation.core.model.DifficultyLevelOptions
 import zed.rainxch.plscribbledash.presentation.core.model.GameModeOptions
+import zed.rainxch.plscribbledash.presentation.core.model.PaintPathDTO
 
 @Serializable
 sealed class NavGraph(var route: String) {
@@ -12,11 +12,7 @@ sealed class NavGraph(var route: String) {
     object Home : NavGraph("home")
 
     @Serializable
-    object Test : NavGraph("test")
-
-    override fun toString(): String {
-        return route
-    }
+    object Statistics : NavGraph("statistics")
 
     @Serializable
     data class GameModeScreen(
@@ -26,6 +22,13 @@ sealed class NavGraph(var route: String) {
     @Serializable
     data class GameScreen (
         var difficultyLevel: DifficultyLevelOptions,
-//        var gameMode: GameModeOptions
     ) : NavGraph("gameScreen")
+
+    @Serializable
+    data class ResultScreen(
+        val rate: Int,
+        val previewDrawing: String,
+        val userDrawn: List<String>
+    ) : NavGraph("resultScreen")
+
 }

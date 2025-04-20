@@ -11,7 +11,8 @@ import zed.rainxch.plscribbledash.presentation.core.navigation.NavGraph
 import zed.rainxch.plscribbledash.presentation.screens.game.GameScreen
 import zed.rainxch.plscribbledash.presentation.screens.gameMode.GameModeScreen
 import zed.rainxch.plscribbledash.presentation.screens.home.HomeScreen
-import zed.rainxch.plscribbledash.presentation.screens.test.Test
+import zed.rainxch.plscribbledash.presentation.screens.result.ResultScreen
+import zed.rainxch.plscribbledash.presentation.screens.statistics.StatisticsScreen
 
 @Composable
 fun AppNavigation(
@@ -26,8 +27,8 @@ fun AppNavigation(
         composable<NavGraph.Home> {
             HomeScreen(navController)
         }
-        composable<NavGraph.Test> {
-            Test()
+        composable<NavGraph.Statistics> {
+            StatisticsScreen()
         }
 
         composable<NavGraph.GameModeScreen> { backStackEntry ->
@@ -41,6 +42,16 @@ fun AppNavigation(
         composable<NavGraph.GameScreen> { backStackEntry ->
             val args = backStackEntry.toRoute<NavGraph.GameScreen>()
             GameScreen(navController, args.difficultyLevel)
+        }
+
+        composable<NavGraph.ResultScreen> { backStackEntry ->
+            val args = backStackEntry.toRoute<NavGraph.ResultScreen>()
+            ResultScreen(
+                navController,
+                args.rate,
+                args.previewDrawing,
+                args.userDrawn
+            )
         }
     }
 }

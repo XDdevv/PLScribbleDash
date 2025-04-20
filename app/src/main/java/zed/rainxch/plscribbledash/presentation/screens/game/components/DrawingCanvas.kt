@@ -22,18 +22,20 @@ fun DrawingCanvas(
     onTouchStart : (Offset) -> Unit,
     onTouchMove : (Offset) -> Unit,
     onTouchEnd : () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isEnabled : Boolean = true
 ) {
     Canvas(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.White)
             .pointerInput(Unit) {
-                detectDragGestures(
-                    onDragStart = { onTouchStart(it) },
-                    onDrag = { it, dragAmount -> onTouchMove(it.position) },
-                    onDragEnd = { onTouchEnd() }
-                )
+                if (isEnabled) {
+                    detectDragGestures(
+                        onDragStart = { onTouchStart(it) },
+                        onDrag = { it, _ -> onTouchMove(it.position) },
+                        onDragEnd = { onTouchEnd() }
+                    )
+                }
             }
     ) {
         paths.forEach { paintPath ->
@@ -45,7 +47,6 @@ fun DrawingCanvas(
                     val from = paintPath.points[i - 1]
                     val to = paintPath.points[i]
 
-                    // Use quadratic Bezier curves for smoother lines
                     if (i < paintPath.points.size - 1) {
                         val nextPoint = paintPath.points[i + 1]
                         val controlX = to.x

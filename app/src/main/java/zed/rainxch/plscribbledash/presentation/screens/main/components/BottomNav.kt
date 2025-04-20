@@ -27,12 +27,12 @@ fun BottomNavBar(
     val currentStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = currentStackEntry?.destination
 
-    val allowedScreens = currentDestination != null && bottomNavAllowedScreenList.any { allowedScreen ->
+    val screenAllowed = currentDestination != null && bottomNavAllowedScreenList.any { allowedScreen ->
         currentDestination.route?.endsWith(".${allowedScreen::class.simpleName}") == true ||
                 currentDestination.route == allowedScreen.route
     }
 
-    if (allowedScreens) {
+    if (screenAllowed) {
         NavigationBar(
             containerColor = Color.White,
             contentColor = MaterialTheme.colorScheme.primary
@@ -59,8 +59,15 @@ fun BottomNavBar(
                             painter = painterResource(navItem.icon),
                             contentDescription = "Bottom nav item",
                             colorFilter = ColorFilter.tint(
-                                if (isSelected) Color(0xFF238CFF)
-                                else Color(0xffE1D5CA)
+                                if (isSelected) {
+                                    if (navItem.screen.route == "home") {
+                                        Color(0xff238CFF)
+                                    } else {
+                                        Color(0xffFA852C)
+                                    }
+                                } else {
+                                    Color(0xffE1D5CA)
+                                }
                             ),
                             modifier = Modifier.size(24.dp)
                         )

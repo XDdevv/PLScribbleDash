@@ -10,7 +10,7 @@ data class BottomNavItem(
     companion object {
         fun bottomNavItems() = listOf(
             BottomNavItem(
-                screen = NavGraph.Test,
+                screen = NavGraph.Statistics,
                 icon = R.drawable.ic_analytics
             ),
             BottomNavItem(

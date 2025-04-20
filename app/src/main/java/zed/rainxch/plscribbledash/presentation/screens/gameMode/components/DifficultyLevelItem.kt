@@ -34,9 +34,10 @@ fun DifficultyLevelItem(
         modifier = modifier
             .width(100.dp)
             .background(Color.Transparent)
+            .offset(y = if (difficultyLevelItem.difficultyLevel == DifficultyLevelOptions.Challenging) (-16).dp else 0.dp)
             .clickable {
                 onItemClicked(difficultyLevelItem)
-            }.offset(y = if (difficultyLevelItem.difficultyLevel == DifficultyLevelOptions.Challenging) (-16).dp else 0.dp),
+            },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(

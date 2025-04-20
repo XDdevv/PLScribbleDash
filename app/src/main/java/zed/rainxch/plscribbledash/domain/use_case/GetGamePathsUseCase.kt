@@ -5,7 +5,7 @@ import zed.rainxch.plscribbledash.domain.model.PaintPath
 import zed.rainxch.plscribbledash.domain.repository.PaintRepository
 import javax.inject.Inject
 
-class GetPathsUseCase @Inject constructor(
+class GetGamePathsUseCase @Inject constructor(
     private val repository: PaintRepository
 ) {
     operator fun invoke(): StateFlow<List<PaintPath>> {
