@@ -47,6 +47,7 @@ import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import zed.rainxch.plscribbledash.R
+import zed.rainxch.plscribbledash.domain.model.ParsedPath
 import zed.rainxch.plscribbledash.domain.model.toPaintPath
 import zed.rainxch.plscribbledash.domain.model.toPath
 import zed.rainxch.plscribbledash.presentation.components.BlueButton
@@ -56,19 +57,17 @@ import zed.rainxch.plscribbledash.presentation.components.HeadlineLargeText
 import zed.rainxch.plscribbledash.presentation.components.LabelSmallText
 import zed.rainxch.plscribbledash.presentation.core.model.GameModeOptions
 import zed.rainxch.plscribbledash.presentation.core.navigation.NavGraph
-import zed.rainxch.plscribbledash.presentation.core.utils.PathSerializer
 import zed.rainxch.plscribbledash.presentation.screens.result.vm.ResultViewModel
 
 @Composable
 fun ResultScreen(
     navController: NavController,
     rate: Int,
-    previewPaths: String,
+    previewPaths: ParsedPath,
     userDrawnPaths: List<String>,
     modifier: Modifier = Modifier,
     viewModel: ResultViewModel = hiltViewModel()
 ) {
-    val parsedPath = PathSerializer.stringToParsedPathWithGson(previewPaths)
     BackHandler { }
 
     Column(
@@ -167,12 +166,12 @@ fun ResultScreen(
                         val canvasWidth = size.width
                         val canvasHeight = size.height
 
-                        val scaleX = canvasWidth / parsedPath.viewportWidth.toFloat()
-                        val scaleY = canvasHeight / parsedPath.viewportHeight.toFloat()
+                        val scaleX = canvasWidth / previewPaths.viewportWidth.toFloat()
+                        val scaleY = canvasHeight / previewPaths.viewportHeight.toFloat()
 
                         val scale = minOf(scaleX, scaleY)
-                        val scaledWidth = parsedPath.viewportWidth * scale
-                        val scaledHeight = parsedPath.viewportHeight * scale
+                        val scaledWidth = previewPaths.viewportWidth * scale
+                        val scaledHeight = previewPaths.viewportHeight * scale
                         val translateX = (canvasWidth - scaledWidth) / 2f
                         val translateY = (canvasHeight - scaledHeight) / 2f
 
@@ -180,13 +179,13 @@ fun ResultScreen(
                             translate(left = translateX, top = translateY)
                             scale(scaleX = scale, scaleY = scale, pivot = Offset.Zero)
                         }) {
-                            val composePaths = parsedPath.paths.map { it.toPath() }
+                            val composePaths = previewPaths.paths.map { it.toPath() }
 
                             composePaths.forEachIndexed { index, path ->
                                 drawPath(
                                     path = path,
                                     color = Color.Black,
-                                    style = Stroke(width = parsedPath.paths[index].strokeWidth)
+                                    style = Stroke(width = previewPaths.paths[index].strokeWidth)
                                 )
                             }
                         }
@@ -248,24 +247,20 @@ fun ResultScreen(
                                 )
                             }
                     ) {
-                        // Define your viewport dimensions
                         val viewportWidth = 1000f
                         val viewportHeight = 1000f
 
-                        // Calculate scaling factors
                         val canvasWidth = size.width
                         val canvasHeight = size.height
                         val scaleX = canvasWidth / viewportWidth
                         val scaleY = canvasHeight / viewportHeight
                         val scale = minOf(scaleX, scaleY)
 
-                        // Calculate translation to center the drawing
                         val scaledWidth = viewportWidth * scale
                         val scaledHeight = viewportHeight * scale
                         val translateX = (canvasWidth - scaledWidth) / 2f
                         val translateY = (canvasHeight - scaledHeight) / 2f
 
-                        // Apply transformation to all drawing operations
                         withTransform({
                             translate(left = translateX, top = translateY)
                             scale(scaleX = scale, scaleY = scale, pivot = Offset.Zero)
@@ -312,7 +307,7 @@ fun ResultScreen(
         Spacer(Modifier.height(32.dp))
 
         val randomTitle by remember { mutableStateOf(viewModel.getRandomTitle(rate)) }
-        val randomDesc by remember { mutableIntStateOf(viewModel.getRandomFeedbackResource(rate)) }
+        val randomDescId by remember { mutableIntStateOf(viewModel.getRandomFeedbackResource(rate)) }
 
         HeadlineLargeText(
             text = randomTitle,
@@ -321,7 +316,7 @@ fun ResultScreen(
         BodyMediumText(
             text = ContextCompat.getString(
                 LocalContext.current,
-                randomDesc
+                randomDescId
             ),
             textColor = MaterialTheme.colorScheme.secondary,
             align = TextAlign.Center

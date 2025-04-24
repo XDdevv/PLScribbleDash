@@ -19,6 +19,9 @@ import kotlin.math.min
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.withSave
 import androidx.core.graphics.toColorInt
+import kotlin.math.abs
+import kotlin.math.max
+import kotlin.math.pow
 
 class GameRepositoryImpl @javax.inject.Inject constructor(
     private val context: Context
@@ -142,7 +145,7 @@ class GameRepositoryImpl @javax.inject.Inject constructor(
         difficultyLevelOption: DifficultyLevelOptions
     ): Int {
         return withContext(Dispatchers.Default) {
-            // Get stroke width multiplier based on difficulty
+            // 1. Get stroke width multiplier based on difficulty
             val strokeWidthMultiplier = when (difficultyLevelOption) {
                 DifficultyLevelOptions.Beginner -> 15f
                 DifficultyLevelOptions.Challenging -> 7f
@@ -154,11 +157,11 @@ class GameRepositoryImpl @javax.inject.Inject constructor(
             val exampleStrokeWidth =
                 exampleParsedPath.paths.map { it.strokeWidth }.average().toFloat()
 
-            // Step 1: Calculate bounds for both drawings
+            // 2a. Calculate bounds for both drawings
             val userBounds = calculateUserPathsBounds(userPaths)
             val exampleBounds = calculateExamplePathsBounds(exampleParsedPath)
 
-            // Step 2a: Inset bounds by half the drawing's stroke width
+            // 2b. Inset bounds
             val userInsetBounds = RectF(userBounds).apply {
                 val insetAmount = userStrokeWidth / 2f + (exampleStrokeWidth - userStrokeWidth) / 2f
                 inset(insetAmount, insetAmount)
@@ -168,7 +171,7 @@ class GameRepositoryImpl @javax.inject.Inject constructor(
                 inset(exampleStrokeWidth / 2f, exampleStrokeWidth / 2f)
             }
 
-            // Step 3: Create bitmaps for rendering
+            // 3. Create bitmaps for rendering
             val canvasSize = 1000 // Use a fixed size for the comparison canvas
 
             val userBitmap = createBitmap(canvasSize, canvasSize)
@@ -181,7 +184,7 @@ class GameRepositoryImpl @javax.inject.Inject constructor(
             userCanvas.drawColor(Color.Transparent.toArgb(), PorterDuff.Mode.CLEAR)
             exampleCanvas.drawColor(Color.Transparent.toArgb(), PorterDuff.Mode.CLEAR)
 
-            // Step 2c & 2d: Scale and translate to normalize paths
+            // 2c & 2d. Scale and translate to normalize paths
             normalizeAndDrawUserPaths(userCanvas, userPaths, userInsetBounds, canvasSize)
             normalizeAndDrawExamplePaths(
                 exampleCanvas,
@@ -191,7 +194,7 @@ class GameRepositoryImpl @javax.inject.Inject constructor(
                 strokeWidthMultiplier
             )
 
-            // Step 4-7: Compare pixels
+            // 4-7. Compare pixels - Exactly as specified in the algorithm
             var visibleUserPixelCount = 0
             var matchingUserPixelCount = 0
 
@@ -205,15 +208,23 @@ class GameRepositoryImpl @javax.inject.Inject constructor(
                 val userAlpha = android.graphics.Color.alpha(userPixels[i])
                 val exampleAlpha = android.graphics.Color.alpha(examplePixels[i])
 
+                // 5. If transparent in both, ignore
+                if (userAlpha == 0 && exampleAlpha == 0) {
+                    continue
+                }
+
+                // 6. If non-transparent in user's bitmap, count as visible user pixel
                 if (userAlpha > 0) {
                     visibleUserPixelCount++
+
+                    // 7. If also non-transparent in example bitmap, count as matched pixel
                     if (exampleAlpha > 0) {
                         matchingUserPixelCount++
                     }
                 }
             }
 
-            // Step 8: Calculate score (avoid division by zero)
+            // 8. Calculate coverage percentage
             val coveragePercentage = if (visibleUserPixelCount > 0) {
                 (matchingUserPixelCount.toFloat() / visibleUserPixelCount.toFloat()) * 100
             } else {
@@ -292,66 +303,67 @@ class GameRepositoryImpl @javax.inject.Inject constructor(
     ) {
         if (bounds.isEmpty) return
 
-        canvas.withSave() {
+        canvas.save()
 
-            // Calculate scaling to fit the canvas while preserving aspect ratio
-            val scaleX = canvasSize / bounds.width()
-            val scaleY = canvasSize / bounds.height()
-            val scale = min(scaleX, scaleY)
+        // 2c. Offset to (0,0)
+        // 2d. Scale to fit canvas while preserving aspect ratio
+        val scaleX = canvasSize / bounds.width()
+        val scaleY = canvasSize / bounds.height()
+        val scale = min(scaleX, scaleY)
 
-            // Center the drawing
-            val scaledWidth = bounds.width() * scale
-            val scaledHeight = bounds.height() * scale
-            val translateX = (canvasSize - scaledWidth) / 2f - bounds.left * scale
-            val translateY = (canvasSize - scaledHeight) / 2f - bounds.top * scale
+        // Center the drawing
+        val scaledWidth = bounds.width() * scale
+        val scaledHeight = bounds.height() * scale
+        val translateX = (canvasSize - scaledWidth) / 2f - bounds.left * scale
+        val translateY = (canvasSize - scaledHeight) / 2f - bounds.top * scale
 
-            translate(translateX, translateY)
-            scale(scale, scale)
+        canvas.translate(translateX, translateY)
+        canvas.scale(scale, scale)
 
-            // Draw each path
-            for (paintPath in paths) {
-                if (paintPath.points.size > 1) {
-                    val paint = Paint().apply {
-                        color = paintPath.color.toArgb()
-                        strokeWidth = paintPath.strokeWidth
-                        style = Paint.Style.STROKE
-                        strokeCap = when (paintPath.strokeCap) {
-                            StrokeCap.Round -> Paint.Cap.ROUND
-                            StrokeCap.Square -> Paint.Cap.SQUARE
-                            else -> Paint.Cap.BUTT
-                        }
-                        strokeJoin = when (paintPath.strokeJoin) {
-                            StrokeJoin.Round -> Paint.Join.ROUND
-                            StrokeJoin.Bevel -> Paint.Join.BEVEL
-                            else -> Paint.Join.MITER
-                        }
-                        isAntiAlias = true
+        // Draw each path
+        for (paintPath in paths) {
+            if (paintPath.points.size > 1) {
+                val paint = Paint().apply {
+                    color = paintPath.color.toArgb()
+                    strokeWidth = paintPath.strokeWidth
+                    style = Paint.Style.STROKE
+                    strokeCap = when (paintPath.strokeCap) {
+                        StrokeCap.Round -> Paint.Cap.ROUND
+                        StrokeCap.Square -> Paint.Cap.SQUARE
+                        else -> Paint.Cap.BUTT
                     }
-
-                    val path = android.graphics.Path()
-                    path.moveTo(paintPath.points.first().x, paintPath.points.first().y)
-
-                    for (i in 1 until paintPath.points.size) {
-                        val from = paintPath.points[i - 1]
-                        val to = paintPath.points[i]
-
-                        if (i < paintPath.points.size - 1) {
-                            val nextPoint = paintPath.points[i + 1]
-                            val controlX = to.x
-                            val controlY = to.y
-                            val endX = (to.x + nextPoint.x) / 2
-                            val endY = (to.y + nextPoint.y) / 2
-                            path.quadTo(controlX, controlY, endX, endY)
-                        } else {
-                            path.lineTo(to.x, to.y)
-                        }
+                    strokeJoin = when (paintPath.strokeJoin) {
+                        StrokeJoin.Round -> Paint.Join.ROUND
+                        StrokeJoin.Bevel -> Paint.Join.BEVEL
+                        else -> Paint.Join.MITER
                     }
-
-                    drawPath(path, paint)
+                    isAntiAlias = true
                 }
-            }
 
+                val path = android.graphics.Path()
+                path.moveTo(paintPath.points.first().x, paintPath.points.first().y)
+
+                for (i in 1 until paintPath.points.size) {
+                    val from = paintPath.points[i - 1]
+                    val to = paintPath.points[i]
+
+                    if (i < paintPath.points.size - 1) {
+                        val nextPoint = paintPath.points[i + 1]
+                        val controlX = to.x
+                        val controlY = to.y
+                        val endX = (to.x + nextPoint.x) / 2
+                        val endY = (to.y + nextPoint.y) / 2
+                        path.quadTo(controlX, controlY, endX, endY)
+                    } else {
+                        path.lineTo(to.x, to.y)
+                    }
+                }
+
+                canvas.drawPath(path, paint)
+            }
         }
+
+        canvas.restore()
     }
 
     private fun normalizeAndDrawExamplePaths(
@@ -363,43 +375,45 @@ class GameRepositoryImpl @javax.inject.Inject constructor(
     ) {
         if (bounds.isEmpty) return
 
-        canvas.withSave() {
+        canvas.save()
 
-            // Calculate scaling to fit the canvas while preserving aspect ratio
-            val scaleX = canvasSize / bounds.width()
-            val scaleY = canvasSize / bounds.height()
-            val scale = min(scaleX, scaleY)
+        // 2c. Offset to (0,0)
+        // 2d. Scale to fit canvas while preserving aspect ratio
+        val scaleX = canvasSize / bounds.width()
+        val scaleY = canvasSize / bounds.height()
+        val scale = min(scaleX, scaleY)
 
-            // Center the drawing
-            val scaledWidth = bounds.width() * scale
-            val scaledHeight = bounds.height() * scale
-            val translateX = (canvasSize - scaledWidth) / 2f - bounds.left * scale
-            val translateY = (canvasSize - scaledHeight) / 2f - bounds.top * scale
+        // Center the drawing
+        val scaledWidth = bounds.width() * scale
+        val scaledHeight = bounds.height() * scale
+        val translateX = (canvasSize - scaledWidth) / 2f - bounds.left * scale
+        val translateY = (canvasSize - scaledHeight) / 2f - bounds.top * scale
 
-            translate(translateX, translateY)
-            scale(scale, scale)
+        canvas.translate(translateX, translateY)
+        canvas.scale(scale, scale)
 
-            // Draw each path with thicker stroke
-            for (pathData in parsedPath.paths) {
-                val path = PathParser.createPathFromPathData(pathData.pathData)
-                if (path != null) {
-                    val paint = Paint().apply {
-                        try {
-                            color = Color(pathData.strokeColor.toColorInt()).toArgb()
-                        } catch (e: Exception) {
-                            color = Color.Black.toArgb() // Fallback color
-                        }
-                        strokeWidth = pathData.strokeWidth * strokeWidthMultiplier
-                        style = Paint.Style.STROKE
-                        strokeCap = Paint.Cap.ROUND
-                        strokeJoin = Paint.Join.ROUND
-                        isAntiAlias = true
+        // Draw each path with thicker stroke (as specified in step 1)
+        for (pathData in parsedPath.paths) {
+            val path = PathParser.createPathFromPathData(pathData.pathData)
+            if (path != null) {
+                val paint = Paint().apply {
+                    try {
+                        color = Color(pathData.strokeColor.toColorInt()).toArgb()
+                    } catch (e: Exception) {
+                        color = Color.Black.toArgb() // Fallback color
                     }
-
-                    drawPath(path, paint)
+                    // 1. Apply the stroke width multiplier based on difficulty
+                    strokeWidth = pathData.strokeWidth * strokeWidthMultiplier
+                    style = Paint.Style.STROKE
+                    strokeCap = Paint.Cap.ROUND
+                    strokeJoin = Paint.Join.ROUND
+                    isAntiAlias = true
                 }
-            }
 
+                canvas.drawPath(path, paint)
+            }
         }
+
+        canvas.restore()
     }
 }

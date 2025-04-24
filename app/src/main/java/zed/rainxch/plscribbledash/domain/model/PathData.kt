@@ -1,5 +1,8 @@
 package zed.rainxch.plscribbledash.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class PathData(
     val pathData: String,
     val strokeWidth: Float,

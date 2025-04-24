@@ -291,12 +291,11 @@ fun GameScreen(
             }
 
             is GameState.FINISHED -> {
-                val stringPath = PathSerializer.parsedPathToStringWithGson(state.path)
                 val paths by remember { mutableStateOf(paths.map { it.toStringDTO() }) }
                 navController.navigate(
                     NavGraph.ResultScreen(
                         state.score,
-                        stringPath,
+                        state.path,
                         paths
                     )
                 )

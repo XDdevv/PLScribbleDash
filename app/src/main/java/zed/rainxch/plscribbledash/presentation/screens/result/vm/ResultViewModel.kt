@@ -10,7 +10,7 @@ class ResultViewModel : ViewModel() {
             in 40..70 -> "Meh"
             in 70..79 -> "Good"
             in 80..90 -> "Great"
-            in 100..100 -> "Woohoo!"
+            in 90..100 -> "Woohoo!"
             else -> "Invalid"
         }
     }
@@ -22,7 +22,7 @@ class ResultViewModel : ViewModel() {
             in 70..79 -> getGoodFeedback().random()
             in 80..90 -> getGoodFeedback().random()
             in 100..100 -> getWoohoFeedback().random()
-            else -> -1
+            else -> getOopsFeedback().random()
         }
     }
 

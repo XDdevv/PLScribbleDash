@@ -1,5 +1,8 @@
 package zed.rainxch.plscribbledash.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ParsedPath(
     val paths: List<PathData>,
     val width: Int,

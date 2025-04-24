@@ -36,6 +36,7 @@ import zed.rainxch.plscribbledash.presentation.components.BodySmallText
 import zed.rainxch.plscribbledash.presentation.components.HeadlineLargeText
 import zed.rainxch.plscribbledash.presentation.core.model.Statistic
 import zed.rainxch.plscribbledash.presentation.core.model.StatisticsType
+import zed.rainxch.plscribbledash.presentation.core.ui.theme.PLScribbleDashTheme
 
 @Composable
 fun StatisticsItem(
@@ -106,13 +107,15 @@ fun getDominantColorFromImage(
 @Preview
 @Composable
 fun StatisticsItemPreview(modifier: Modifier = Modifier) {
-    StatisticsItem(
-        statistic = Statistic(
-            id = "for now 2",
-            icon = R.drawable.ic_difficulty_master,
-            title = "Nothing to track...for now",
-            progress = 0f,
-            statisticsType = StatisticsType.COUNT
+    PLScribbleDashTheme {
+        StatisticsItem(
+            statistic = Statistic(
+                id = "for now 2",
+                icon = R.drawable.ic_difficulty_master,
+                title = "Nothing to track...for now",
+                progress = 0f,
+                statisticsType = StatisticsType.COUNT
+            )
         )
-    )
+    }
 }

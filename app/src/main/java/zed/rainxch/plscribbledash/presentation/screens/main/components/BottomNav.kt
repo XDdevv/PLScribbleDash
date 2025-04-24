@@ -2,6 +2,7 @@ package zed.rainxch.plscribbledash.presentation.screens.main.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -11,7 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -43,6 +46,15 @@ fun BottomNavBar(
                     currentDestination.route == navItem.screen.route -> true
                     else -> false
                 }
+                val itemColor = if (isSelected) {
+                    if (navItem.screen.route == "home") {
+                        Color(0xff238CFF)
+                    } else {
+                        Color(0xffFA852C)
+                    }
+                } else {
+                    Color(0xffE1D5CA)
+                }
 
                 NavigationBarItem(
                     selected = isSelected,
@@ -55,20 +67,10 @@ fun BottomNavBar(
                         }
                     },
                     icon = {
-                        Image(
-                            painter = painterResource(navItem.icon),
+                        Icon(
+                            imageVector = ImageVector.vectorResource(navItem.icon),
                             contentDescription = "Bottom nav item",
-                            colorFilter = ColorFilter.tint(
-                                if (isSelected) {
-                                    if (navItem.screen.route == "home") {
-                                        Color(0xff238CFF)
-                                    } else {
-                                        Color(0xffFA852C)
-                                    }
-                                } else {
-                                    Color(0xffE1D5CA)
-                                }
-                            ),
+                            tint = itemColor,
                             modifier = Modifier.size(24.dp)
                         )
                     },
