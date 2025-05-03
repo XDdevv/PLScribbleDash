@@ -54,6 +54,7 @@ fun GreenButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    buttonModifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
     Box(
@@ -65,7 +66,7 @@ fun GreenButton(
     ) {
         Button(
             onClick = onClick,
-            modifier = Modifier,
+            modifier = buttonModifier,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF0DD280),
                 contentColor = Color.White

@@ -23,6 +23,7 @@ import zed.rainxch.plscribbledash.presentation.core.model.GameModeItem
 @Composable
 fun GameModeItem(
     gameModeItem: GameModeItem,
+    borderColor: Color,
     onItemClick : (GameModeItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -30,7 +31,7 @@ fun GameModeItem(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
-            .background(Color(0xFF0DD280))
+            .background(borderColor)
             .padding(8.dp)
             .clickable {
                 onItemClick(gameModeItem)

@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
@@ -82,6 +83,8 @@ fun StatisticsItem(
         HeadlineLargeText(
             text = progress.toString(),
             color = MaterialTheme.colorScheme.onBackground,
+            modifier = Modifier.weight(1f),
+            textAlign = TextAlign.End
         )
     }
 }

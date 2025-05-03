@@ -1,6 +1,7 @@
 package zed.rainxch.plscribbledash.presentation.screens.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -36,7 +37,8 @@ fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .background(Brush.verticalGradient(listOf(Color(0xFFFEFAF6), Color(0xFFFFF1E2))))
-            .padding(16.dp)
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         item {
             HeadlineMediumText(
@@ -65,9 +67,10 @@ fun HomeScreen(
         }
         items(viewModel.getGameModes()) { gameModeItem ->
             GameModeItem(
-                gameModeItem,
+                gameModeItem = gameModeItem,
+                borderColor = gameModeItem.borderColor,
                 onItemClick = {
-                    navController.navigate(NavGraph.GameModeScreen(gameModeItem.gameModeOptions))
+                    navController.navigate(NavGraph.DifficultyModeScreen(gameModeItem.gameModeOptions))
                 }
             )
         }

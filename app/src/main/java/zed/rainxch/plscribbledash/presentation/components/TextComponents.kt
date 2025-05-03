@@ -36,6 +36,7 @@ fun DisplayMediumText(
         color = color,
         modifier = modifier,
         style = MaterialTheme.typography.displayMedium,
+        textAlign = TextAlign.Center,
         fontSize = 40.sp
     )
 }
@@ -44,12 +45,14 @@ fun DisplayMediumText(
 fun HeadlineLargeText(
     text: String,
     color: Color,
+    textAlign: TextAlign = TextAlign.Center,
     modifier: Modifier = Modifier
 ) {
     Text(
         text = text,
         modifier = modifier,
         color = color,
+        textAlign = textAlign,
         style = MaterialTheme.typography.headlineLarge,
         fontSize = 34.sp
     )

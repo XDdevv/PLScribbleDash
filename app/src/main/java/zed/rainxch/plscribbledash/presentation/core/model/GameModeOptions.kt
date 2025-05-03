@@ -4,5 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class GameModeOptions {
-    OneRoundWonder
+    OneRoundWonder,
+    SpeedDraw,
+    EndlessMode
 }

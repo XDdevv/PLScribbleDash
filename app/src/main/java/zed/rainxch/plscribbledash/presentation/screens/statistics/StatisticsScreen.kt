@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +25,7 @@ fun StatisticsScreen(
     modifier: Modifier = Modifier,
     viewModel: StatisticsViewModel = hiltViewModel()
 ) {
+    val statistics by viewModel.statisticsState.collectAsState()
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -39,7 +42,7 @@ fun StatisticsScreen(
         LazyColumn(
             modifier = Modifier.fillMaxWidth()
         ) {
-            items(viewModel.getStatistics()) { statistic ->
+            items(statistics) { statistic ->
                 StatisticsItem(
                     statistic = statistic
                 )

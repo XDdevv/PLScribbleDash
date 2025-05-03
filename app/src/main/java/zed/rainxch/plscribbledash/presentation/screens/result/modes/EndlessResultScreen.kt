@@ -1,0 +1,192 @@
+package zed.rainxch.plscribbledash.presentation.screens.result.modes
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import zed.rainxch.plscribbledash.R
+import zed.rainxch.plscribbledash.presentation.components.BlueButton
+import zed.rainxch.plscribbledash.presentation.components.BodyMediumText
+import zed.rainxch.plscribbledash.presentation.components.DisplayLargeText
+import zed.rainxch.plscribbledash.presentation.components.HeadlineLargeText
+import zed.rainxch.plscribbledash.presentation.components.LabelSmallText
+import zed.rainxch.plscribbledash.presentation.components.LabelXLargeText
+import zed.rainxch.plscribbledash.presentation.core.components.NewScoreImageText
+import zed.rainxch.plscribbledash.presentation.core.components.CounterComponent
+import zed.rainxch.plscribbledash.presentation.core.model.GameModeOptions
+import zed.rainxch.plscribbledash.presentation.core.navigation.NavGraph
+import zed.rainxch.plscribbledash.presentation.screens.result.utils.ResultState
+import zed.rainxch.plscribbledash.presentation.screens.result.vm.ResultViewModel
+
+@Composable
+fun EndlessResultScreen(
+    navController: NavController,
+    viewModel: ResultViewModel,
+    state: ResultState.Endless,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        IconButton(
+            onClick = {
+                navController.navigate(NavGraph.Home) {
+                    popUpTo(0) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            },
+            modifier = modifier
+                .align(Alignment.End),
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_cancel),
+                contentDescription = "Back",
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .size(32.dp)
+            )
+        }
+
+        Spacer(Modifier.height(12.dp))
+
+        LabelXLargeText(
+            text = "Time's up!",
+            color = MaterialTheme.colorScheme.onBackground
+        )
+
+        Spacer(Modifier.height(20.dp))
+
+        Card(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = Color.White
+            ),
+            elevation = CardDefaults.cardElevation(
+                4.dp
+            )
+        ) {
+            Box (
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                        .background(MaterialTheme.colorScheme.surface)
+                        .padding(16.dp)
+                ) {
+                    DisplayLargeText(
+                        text = "${state.averageScore}%",
+                        textColor = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                if (state.isAverageAccuracyHighScore) {
+                    NewScoreImageText(
+                        content = "New High Score",
+                        modifier = Modifier.align(Alignment.TopCenter)
+                    )
+                }
+            }
+
+            val randomTitle by rememberSaveable { mutableStateOf(viewModel.getRandomTitle(state.averageScore)) }
+            val randomDescId by rememberSaveable {
+                mutableIntStateOf(
+                    viewModel.getRandomFeedbackResource(
+                        state.averageScore
+                    )
+                )
+            }
+
+            Spacer(Modifier.height(12.dp))
+            HeadlineLargeText(
+                text = randomTitle,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+            Spacer(Modifier.height(4.dp))
+            BodyMediumText(
+                text = ContextCompat.getString(
+                    LocalContext.current,
+                    randomDescId
+                ),
+                textColor = MaterialTheme.colorScheme.secondary,
+                align = TextAlign.Center,
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .align(Alignment.CenterHorizontally)
+            )
+            Spacer(Modifier.height(16.dp))
+            CounterComponent(
+                content = state.mehPlusCount.toString(),
+                backgroundColor = if (state.isMehPlusHighScore) Color(0xffED6363) else MaterialTheme.colorScheme.surfaceContainerHigh,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(8.dp)
+            )
+            if (state.isMehPlusHighScore) {
+                LabelSmallText(
+                    text = "NEW HIGH!",
+                    textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .align(Alignment.CenterHorizontally)
+                )
+            }
+        }
+
+
+        Spacer(Modifier.weight(1f))
+        BlueButton(
+            text = stringResource(R.string.draw_again),
+            {
+                navController.navigate(NavGraph.DifficultyModeScreen(GameModeOptions.SpeedDraw)) {
+                    popUpTo(NavGraph.Home) {
+                        inclusive = false
+                    }
+                    launchSingleTop = true
+                }
+            },
+            modifier = Modifier.padding(24.dp)
+        )
+    }
+}

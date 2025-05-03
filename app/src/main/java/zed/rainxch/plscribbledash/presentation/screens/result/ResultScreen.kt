@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,282 +58,45 @@ import zed.rainxch.plscribbledash.presentation.components.HeadlineLargeText
 import zed.rainxch.plscribbledash.presentation.components.LabelSmallText
 import zed.rainxch.plscribbledash.presentation.core.model.GameModeOptions
 import zed.rainxch.plscribbledash.presentation.core.navigation.NavGraph
+import zed.rainxch.plscribbledash.presentation.screens.result.modes.EndlessResultScreen
+import zed.rainxch.plscribbledash.presentation.screens.result.modes.OneRoundWonderGameScreen
+import zed.rainxch.plscribbledash.presentation.screens.result.modes.SpeedDrawResultScreen
+import zed.rainxch.plscribbledash.presentation.screens.result.utils.ResultState
 import zed.rainxch.plscribbledash.presentation.screens.result.vm.ResultViewModel
 
 @Composable
 fun ResultScreen(
     navController: NavController,
-    rate: Int,
-    previewPaths: ParsedPath,
-    userDrawnPaths: List<String>,
+    resultState: ResultState,
     modifier: Modifier = Modifier,
     viewModel: ResultViewModel = hiltViewModel()
 ) {
     BackHandler { }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        IconButton(
-            onClick = {
-                navController.navigate(NavGraph.Home) {
-                    popUpTo(0) {
-                        inclusive = true
-                    }
-                    launchSingleTop = true
-                }
-            },
-            modifier = modifier
-                .align(Alignment.End),
-        ) {
-            Icon(
-                painter = painterResource(id = R.drawable.ic_cancel),
-                contentDescription = "Back",
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .size(32.dp)
+    when (val state = resultState) {
+        is ResultState.OneRoundWonder -> {
+            OneRoundWonderGameScreen(
+                state = state,
+                viewModel = viewModel,
+                navController = navController
             )
         }
 
-        Spacer(Modifier.height(84.dp))
-
-        DisplayLargeText(
-            text = "${rate}%",
-            textColor = MaterialTheme.colorScheme.primary
-        )
-
-        Spacer(Modifier.height(20.dp))
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(32.dp, Alignment.CenterHorizontally)
-        ) {
-            Column(
-                modifier = Modifier.rotate(-16f),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                LabelSmallText(
-                    text = "Example",
-                    textColor = MaterialTheme.colorScheme.secondary
-                )
-                Spacer(Modifier.height(8.dp))
-                Box(
-                    modifier = modifier
-                        .size(150.dp)
-                        .shadow(4.dp, RoundedCornerShape(32.dp))
-                        .background(Color.White)
-                        .padding(12.dp)
-                ) {
-                    Canvas(
-                        modifier = modifier
-                            .size(150.dp)
-                            .background(Color(0xFFFFFFFF))
-                            .clip(RoundedCornerShape(18.dp))
-                            .clipToBounds()
-                            .drawBehind {
-                                val cellSize = size.width / 3
-                                for (i in 1..2) {
-                                    drawLine(
-                                        color = Color(0xFFF6F1EC),
-                                        start = Offset(i * cellSize, 0f),
-                                        end = Offset(i * cellSize, size.height),
-                                        strokeWidth = 1.dp.toPx(),
-                                        alpha = .7f
-                                    )
-                                    drawLine(
-                                        color = Color(0xFFF6F1EC),
-                                        start = Offset(0f, i * cellSize),
-                                        end = Offset(size.width, i * cellSize),
-                                        strokeWidth = 1.dp.toPx(),
-                                        alpha = .7f
-                                    )
-                                }
-
-                                val borderWidth = 2.dp.toPx()
-                                val cornerRadius = 18.dp.toPx()
-
-                                drawRoundRect(
-                                    color = Color(0xFFF6F1EC),
-                                    size = Size(size.width, size.height),
-                                    cornerRadius = CornerRadius(cornerRadius, cornerRadius),
-                                    style = Stroke(width = borderWidth)
-                                )
-                            }
-                    ) {
-                        val canvasWidth = size.width
-                        val canvasHeight = size.height
-
-                        val scaleX = canvasWidth / previewPaths.viewportWidth.toFloat()
-                        val scaleY = canvasHeight / previewPaths.viewportHeight.toFloat()
-
-                        val scale = minOf(scaleX, scaleY)
-                        val scaledWidth = previewPaths.viewportWidth * scale
-                        val scaledHeight = previewPaths.viewportHeight * scale
-                        val translateX = (canvasWidth - scaledWidth) / 2f
-                        val translateY = (canvasHeight - scaledHeight) / 2f
-
-                        withTransform({
-                            translate(left = translateX, top = translateY)
-                            scale(scaleX = scale, scaleY = scale, pivot = Offset.Zero)
-                        }) {
-                            val composePaths = previewPaths.paths.map { it.toPath() }
-
-                            composePaths.forEachIndexed { index, path ->
-                                drawPath(
-                                    path = path,
-                                    color = Color.Black,
-                                    style = Stroke(width = previewPaths.paths[index].strokeWidth)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-            Column(
-                modifier = Modifier
-                    .rotate(16f)
-                    .offset(y = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                LabelSmallText(
-                    text = "Drawing",
-                    textColor = MaterialTheme.colorScheme.secondary
-                )
-                Spacer(Modifier.height(8.dp))
-                Box(
-                    modifier = modifier
-                        .size(150.dp)
-                        .shadow(4.dp, RoundedCornerShape(32.dp))
-                        .background(Color.White)
-                        .padding(12.dp)
-                ) {
-
-                    Canvas(
-                        modifier = Modifier
-                            .size(350.dp)
-                            .background(Color(0xFFFFFFFF))
-                            .clip(RoundedCornerShape(18.dp))
-                            .clipToBounds()
-                            .drawBehind {
-                                val cellSize = size.width / 3
-                                for (i in 1..2) {
-                                    drawLine(
-                                        color = Color(0xFFF6F1EC),
-                                        start = Offset(i * cellSize, 0f),
-                                        end = Offset(i * cellSize, size.height),
-                                        strokeWidth = 1.dp.toPx(),
-                                        alpha = .7f
-                                    )
-                                    drawLine(
-                                        color = Color(0xFFF6F1EC),
-                                        start = Offset(0f, i * cellSize),
-                                        end = Offset(size.width, i * cellSize),
-                                        strokeWidth = 1.dp.toPx(),
-                                        alpha = .7f
-                                    )
-                                }
-
-                                val borderWidth = 2.dp.toPx()
-                                val cornerRadius = 18.dp.toPx()
-
-                                drawRoundRect(
-                                    color = Color(0xFFF6F1EC),
-                                    size = Size(size.width, size.height),
-                                    cornerRadius = CornerRadius(cornerRadius, cornerRadius),
-                                    style = Stroke(width = borderWidth)
-                                )
-                            }
-                    ) {
-                        val viewportWidth = 1000f
-                        val viewportHeight = 1000f
-
-                        val canvasWidth = size.width
-                        val canvasHeight = size.height
-                        val scaleX = canvasWidth / viewportWidth
-                        val scaleY = canvasHeight / viewportHeight
-                        val scale = minOf(scaleX, scaleY)
-
-                        val scaledWidth = viewportWidth * scale
-                        val scaledHeight = viewportHeight * scale
-                        val translateX = (canvasWidth - scaledWidth) / 2f
-                        val translateY = (canvasHeight - scaledHeight) / 2f
-
-                        withTransform({
-                            translate(left = translateX, top = translateY)
-                            scale(scaleX = scale, scaleY = scale, pivot = Offset.Zero)
-                        }) {
-                            val paths = userDrawnPaths.map { it.toPaintPath() }
-                            paths.forEach { paintPath ->
-                                if (paintPath.points.size > 1) {
-                                    val path = Path()
-                                    path.moveTo(paintPath.points.first().x, paintPath.points.first().y)
-
-                                    for (i in 1 until paintPath.points.size) {
-                                        val from = paintPath.points[i - 1]
-                                        val to = paintPath.points[i]
-
-                                        if (i < paintPath.points.size - 1) {
-                                            val nextPoint = paintPath.points[i + 1]
-                                            val controlX = to.x
-                                            val controlY = to.y
-                                            val endX = (to.x + nextPoint.x) / 2
-                                            val endY = (to.y + nextPoint.y) / 2
-                                            path.quadraticBezierTo(controlX, controlY, endX, endY)
-                                        } else {
-                                            path.lineTo(to.x, to.y)
-                                        }
-                                    }
-
-                                    drawPath(
-                                        path = path,
-                                        color = paintPath.color,
-                                        style = Stroke(
-                                            width = paintPath.strokeWidth,
-                                            cap = StrokeCap.Round,
-                                            join = StrokeJoin.Round
-                                        )
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        is ResultState.SpeedDraw -> {
+            SpeedDrawResultScreen(
+                state = state,
+                viewModel = viewModel,
+                navController = navController
+            )
         }
 
-        Spacer(Modifier.height(32.dp))
-
-        val randomTitle by remember { mutableStateOf(viewModel.getRandomTitle(rate)) }
-        val randomDescId by remember { mutableIntStateOf(viewModel.getRandomFeedbackResource(rate)) }
-
-        HeadlineLargeText(
-            text = randomTitle,
-            color = MaterialTheme.colorScheme.primary
-        )
-        BodyMediumText(
-            text = ContextCompat.getString(
-                LocalContext.current,
-                randomDescId
-            ),
-            textColor = MaterialTheme.colorScheme.secondary,
-            align = TextAlign.Center
-        )
-        Spacer(Modifier.weight(1f))
-        BlueButton(
-            text = "TRY AGAIN",
-            {
-                navController.navigate(NavGraph.GameModeScreen(GameModeOptions.OneRoundWonder)) {
-                    popUpTo(NavGraph.Home) {
-                        inclusive = false
-                    }
-                    launchSingleTop = true
-                }
-            },
-            modifier = Modifier.padding(24.dp)
-        )
+        is ResultState.Endless -> {
+            EndlessResultScreen(
+                state = state,
+                viewModel = viewModel,
+                navController = navController
+            )
+        }
     }
+
 }
