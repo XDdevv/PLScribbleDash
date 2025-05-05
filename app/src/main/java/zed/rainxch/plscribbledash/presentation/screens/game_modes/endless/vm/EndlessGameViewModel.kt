@@ -200,7 +200,7 @@ class EndlessGameViewModel @Inject constructor(
     }
 
     fun isSuccess(rate: Int): Boolean {
-        return rate in 60..100
+        return rate in 70..100
     }
 
     fun getRandomTitle(rate: Int): String {

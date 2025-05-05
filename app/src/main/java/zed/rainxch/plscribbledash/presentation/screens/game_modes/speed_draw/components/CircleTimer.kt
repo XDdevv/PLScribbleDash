@@ -29,9 +29,10 @@ fun CircleTimer(
             .shadow(elevation = 6.dp, shape = CircleShape, ambientColor = shadowColor)
             .background(Color.White)
     ) {
+        val textColor = if(timeUI.timeInt <= 30) Color.Red else MaterialTheme.colorScheme.onBackground
         HeadlineXSmallText(
             text = timeUI.timeMinAndSec,
-            textColor = if(timeUI.timeInt <= 30) Color.Red else MaterialTheme.colorScheme.onBackground,
+            textColor = textColor,
             modifier = Modifier.align(Alignment.Center)
         )
     }

@@ -179,7 +179,7 @@ fun EndlessResultScreen(
         BlueButton(
             text = stringResource(R.string.draw_again),
             {
-                navController.navigate(NavGraph.DifficultyModeScreen(GameModeOptions.SpeedDraw)) {
+                navController.navigate(NavGraph.DifficultyModeScreen(GameModeOptions.EndlessMode)) {
                     popUpTo(NavGraph.Home) {
                         inclusive = false
                     }
