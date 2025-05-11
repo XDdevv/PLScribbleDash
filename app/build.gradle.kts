@@ -52,20 +52,31 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.androidx.navigation.compose)
 
-    implementation(libs.kotlinx.serialization.json)
-
-    implementation(libs.androidx.ui.text.google.fonts)
-
+    // DAGGER HILT
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    // ROOM-DB
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
+    // NAVIGATION
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.androidx.navigation.compose)
+
+    // GOOGLE FONTS
+    implementation(libs.androidx.ui.text.google.fonts)
+
+    // PALETTE
     implementation(libs.androidx.palette.ktx)
 
+    // GSON-PARSER
     implementation(libs.gson)
 
+    // TEST
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

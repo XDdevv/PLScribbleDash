@@ -12,6 +12,8 @@ activityCompose = "1.10.1"
 composeBom = "2024.09.00"
 kotlinxSerializationJson = "1.8.0"
 paletteKtx = "1.0.0"
+roomCompiler = "2.7.1"
+roomKtx = "2.7.1"
 uiTextGoogleFonts = "1.7.8"
 hiltAndroid = "2.52"
 hiltCompiler = "2.52"
@@ -21,6 +23,9 @@ navigationCompose = "2.8.9"
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "paletteKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomCompiler" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
