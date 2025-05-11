@@ -8,15 +8,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import zed.rainxch.plscribbledash.data.datasource.StatisticsDataSource
 import zed.rainxch.plscribbledash.data.local.db.AppDatabase
 import zed.rainxch.plscribbledash.data.local.db.dao.StatisticsDao
-import zed.rainxch.plscribbledash.data.repository.GameRepositoryImpl
-import zed.rainxch.plscribbledash.data.repository.PaintRepositoryImpl
-import zed.rainxch.plscribbledash.data.repository.StatisticsRepositoryImpl
-import zed.rainxch.plscribbledash.domain.repository.GameRepository
-import zed.rainxch.plscribbledash.domain.repository.PaintRepository
-import zed.rainxch.plscribbledash.domain.repository.StatisticsRepository
+import zed.rainxch.plscribbledash.home.data.repository.GameRepositoryImpl
+import zed.rainxch.plscribbledash.home.data.repository.PaintRepositoryImpl
+import zed.rainxch.plscribbledash.statistics.domain.repository.StatisticsRepositoryImpl
+import zed.rainxch.plscribbledash.home.domain.repository.GameRepository
+import zed.rainxch.plscribbledash.home.domain.repository.PaintRepository
+import zed.rainxch.plscribbledash.statistics.data.repository.StatisticsRepository
+import zed.rainxch.plscribbledash.statistics.presentation.utils.DominantColorExtractor
 import javax.inject.Singleton
 
 @Module
@@ -63,10 +63,10 @@ abstract class AppModule {
             return appDatabase.statisticsDao()
         }
 
-//        @Provides
-//        @Singleton
-//        fun provideStatisticsDataSource(statisticsDao: StatisticsDao): StatisticsDataSource {
-//            return StatisticsDataSource(statisticsDao)
-//        }
+        @Provides
+        @Singleton
+        fun provideDominantColorExtractor(context: Context): DominantColorExtractor {
+            return DominantColorExtractor(context)
+        }
     }
 }

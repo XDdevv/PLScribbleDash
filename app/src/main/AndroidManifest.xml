@@ -14,7 +14,7 @@
         android:theme="@style/Theme.PLScribbleDash"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.screens.main.MainActivity"
+            android:name=".main.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.PLScribbleDash">
             <intent-filter>
