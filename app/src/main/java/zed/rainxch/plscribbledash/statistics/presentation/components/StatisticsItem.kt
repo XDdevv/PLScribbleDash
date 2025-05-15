@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,15 +19,12 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import zed.rainxch.plscribbledash.R
 import zed.rainxch.plscribbledash.core.presentation.components.BodySmallText
 import zed.rainxch.plscribbledash.core.presentation.components.HeadlineLargeText
 import zed.rainxch.plscribbledash.core.presentation.ui.theme.PLScribbleDashTheme
-import zed.rainxch.plscribbledash.statistics.domain.models.Statistic
-import zed.rainxch.plscribbledash.statistics.domain.models.StatisticsType
-import androidx.compose.runtime.getValue
-import zed.rainxch.plscribbledash.statistics.presentation.vm.StatisticsViewModel
+import zed.rainxch.plscribbledash.statistics.presentation.models.Statistic
+import zed.rainxch.plscribbledash.statistics.presentation.models.StatisticsType
 
 @Composable
 fun StatisticsItem(
@@ -76,8 +71,6 @@ fun StatisticsItem(
         )
     }
 }
-
-
 
 @Preview
 @Composable

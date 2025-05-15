@@ -1,18 +1,21 @@
 package zed.rainxch.plscribbledash.core.presentation.navigation
 
 import kotlinx.serialization.Serializable
-import zed.rainxch.plscribbledash.home.domain.model.DifficultyLevelOptions
-import zed.rainxch.plscribbledash.home.domain.model.GameModeOptions
-import zed.rainxch.plscribbledash.home.presentation.result.utils.ResultState
+import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
+import zed.rainxch.plscribbledash.game.domain.model.GameModeOptions
+import zed.rainxch.plscribbledash.game.presentation.result.utils.ResultState
 
 @Serializable
 sealed class NavGraph(var route: String) {
 
     @Serializable
-    object Home : NavGraph("home")
+    object HomeScreen : NavGraph("home")
 
     @Serializable
-    object Statistics : NavGraph("statistics")
+    object StatisticsScreen : NavGraph("statistics")
+
+    @Serializable
+    object ShopScreen : NavGraph("shop")
 
     @Serializable
     data class DifficultyModeScreen(

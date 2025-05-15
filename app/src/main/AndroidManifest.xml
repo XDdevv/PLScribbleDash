@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".core.app.Application"
+        android:name=".core.domain.app.Application"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +14,7 @@
         android:theme="@style/Theme.PLScribbleDash"
         tools:targetApi="31">
         <activity
-            android:name=".main.MainActivity"
+            android:name=".main.presentation.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.PLScribbleDash">
             <intent-filter>
