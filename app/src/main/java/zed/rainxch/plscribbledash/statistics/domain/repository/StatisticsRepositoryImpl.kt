@@ -2,7 +2,7 @@ package zed.rainxch.plscribbledash.statistics.domain.repository
 
 import android.content.Context
 import zed.rainxch.plscribbledash.R
-import zed.rainxch.plscribbledash.core.data.utils.Constants
+import zed.rainxch.plscribbledash.core.data.utils.constants.Constants
 import zed.rainxch.plscribbledash.core.data.datasource.StatisticsDataSource
 import zed.rainxch.plscribbledash.statistics.data.repository.StatisticsRepository
 import zed.rainxch.plscribbledash.statistics.presentation.models.Statistic
@@ -43,10 +43,10 @@ class StatisticsRepositoryImpl @Inject constructor(
             ),
             Statistic(
                 id = Constants.DB_STATS_MOST_ENDLESS_PLAYED_PLUS,
-                icon = R.drawable.ic_master,
+                icon = R.drawable.ic_palette,
                 title = context.getString(R.string.most_drawings_completed_in_endless_mode),
                 progress = statisticsDataSource.getStatistic(Constants.DB_STATS_MOST_ENDLESS_PLAYED_PLUS).quantity.toFloat(),
-                dominantColor = dominantColorExtractor.extractDominantColorFromImage(R.drawable.ic_master),
+                dominantColor = dominantColorExtractor.extractDominantColorFromImage(R.drawable.ic_palette),
                 statisticsType = StatisticsType.COUNT
             )
         )

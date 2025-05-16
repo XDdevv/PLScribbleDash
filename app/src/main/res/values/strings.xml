@@ -64,4 +64,7 @@
     <string name="new_high_score">New High Score</string>
     <string name="new_high">NEW HIGH!</string>
     <string name="try_again">TRY AGAIN</string>
+    <string name="shop">Shop</string>
+    <string name="pen">Pen</string>
+    <string name="canvas">Canvas</string>
 </resources>

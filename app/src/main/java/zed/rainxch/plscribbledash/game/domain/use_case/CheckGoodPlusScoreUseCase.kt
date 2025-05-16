@@ -1,6 +1,6 @@
 package zed.rainxch.plscribbledash.game.domain.use_case
 
-import zed.rainxch.plscribbledash.core.data.utils.Constants
+import zed.rainxch.plscribbledash.core.data.utils.constants.Constants
 import zed.rainxch.plscribbledash.statistics.data.repository.StatisticsRepository
 import javax.inject.Inject
 

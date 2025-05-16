@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import zed.rainxch.plscribbledash.R
 import zed.rainxch.plscribbledash.core.presentation.components.HeadlineXSmallText
@@ -49,4 +50,12 @@ fun NewScoreImageText(
                 .offset(x = (-12).dp)
         )
     }
+}
+
+@Preview
+@Composable
+private fun NewScoreImageTextPreview() {
+    NewScoreImageText(
+        content = "hallo"
+    )
 }

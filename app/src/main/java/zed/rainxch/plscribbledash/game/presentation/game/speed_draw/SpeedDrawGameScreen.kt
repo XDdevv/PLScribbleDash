@@ -48,7 +48,7 @@ import zed.rainxch.plscribbledash.core.presentation.components.LabelSmallText
 import zed.rainxch.plscribbledash.core.presentation.navigation.NavGraph
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 import zed.rainxch.plscribbledash.game.domain.model.toPath
-import zed.rainxch.plscribbledash.game.presentation.components.CounterComponent
+import zed.rainxch.plscribbledash.game.presentation.components.RowIconTextComponent
 import zed.rainxch.plscribbledash.game.presentation.components.DrawingCanvas
 import zed.rainxch.plscribbledash.game.presentation.game.speed_draw.components.CircleTimer
 import zed.rainxch.plscribbledash.game.presentation.game.speed_draw.utils.SpeedGameState
@@ -96,7 +96,10 @@ fun SpeedDrawGameScreen(
                 timeUI = countdownTimer,
             )
 
-            CounterComponent(content = mehPlusCounter.toString())
+            RowIconTextComponent(
+                icon = R.drawable.ic_palette,
+                content = mehPlusCounter.toString()
+            )
 
             IconButton(
                 onClick = {

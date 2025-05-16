@@ -3,7 +3,7 @@ package zed.rainxch.plscribbledash.core.data.datasource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import zed.rainxch.plscribbledash.core.data.utils.Constants
+import zed.rainxch.plscribbledash.core.data.utils.constants.Constants
 import zed.rainxch.plscribbledash.core.data.db.dao.StatisticsDao
 import zed.rainxch.plscribbledash.core.data.db.entity.StatisticEntity
 import javax.inject.Inject

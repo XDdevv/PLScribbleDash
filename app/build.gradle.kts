@@ -76,6 +76,11 @@ dependencies {
     // GSON-PARSER
     implementation(libs.gson)
 
+    // Data store
+    implementation(libs.androidx.datastore.preferences)
+
+    implementation(libs.androidx.foundation)
+
     // TEST
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

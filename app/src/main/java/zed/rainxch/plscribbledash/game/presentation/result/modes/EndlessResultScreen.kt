@@ -17,20 +17,16 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import zed.rainxch.plscribbledash.R
 import zed.rainxch.plscribbledash.core.presentation.components.BlueButton
@@ -41,7 +37,7 @@ import zed.rainxch.plscribbledash.core.presentation.components.LabelSmallText
 import zed.rainxch.plscribbledash.core.presentation.components.LabelXLargeText
 import zed.rainxch.plscribbledash.core.presentation.navigation.NavGraph
 import zed.rainxch.plscribbledash.game.domain.model.GameModeOptions
-import zed.rainxch.plscribbledash.game.presentation.components.CounterComponent
+import zed.rainxch.plscribbledash.game.presentation.components.RowIconTextComponent
 import zed.rainxch.plscribbledash.game.presentation.components.NewScoreImageText
 import zed.rainxch.plscribbledash.game.presentation.result.utils.ResultState
 import zed.rainxch.plscribbledash.game.presentation.result.vm.ResultViewModel
@@ -147,7 +143,8 @@ fun EndlessResultScreen(
                     .align(Alignment.CenterHorizontally)
             )
             Spacer(Modifier.height(16.dp))
-            CounterComponent(
+            RowIconTextComponent(
+                icon = R.drawable.ic_palette,
                 content = state.mehPlusCount.toString(),
                 backgroundColor = if (state.isMehPlusHighScore) Color(0xffED6363) else MaterialTheme.colorScheme.surfaceContainerHigh,
                 modifier = Modifier

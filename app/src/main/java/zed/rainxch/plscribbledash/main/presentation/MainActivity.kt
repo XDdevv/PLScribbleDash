@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
 
             PLScribbleDashTheme {
                 Scaffold(
-                    modifier = Modifier.Companion.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     bottomBar = {
                         BottomNavBar(
                             navHostController = navHostController,

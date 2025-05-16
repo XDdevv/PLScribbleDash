@@ -1,0 +1,59 @@
+package zed.rainxch.plscribbledash.core.domain.mappers
+
+import androidx.compose.ui.graphics.Color
+import zed.rainxch.plscribbledash.core.domain.model.SerializableColor
+import zed.rainxch.plscribbledash.core.domain.model.SerializableShopPen
+import zed.rainxch.plscribbledash.core.domain.model.ShopPen
+
+fun Color.toSerializableColor(): SerializableColor = SerializableColor(red, green, blue, alpha)
+fun List<Color>.toSerializableColors(): List<SerializableColor> =
+    this.map { it.toSerializableColor() }
+
+fun SerializableColor.toColor(): Color = Color(red, green, blue, alpha)
+
+fun ShopPen.toSerializable(): SerializableShopPen {
+    return when (this) {
+        is ShopPen.Basic -> {
+            SerializableShopPen.Basic(
+                this.color.toSerializableColor(),
+                this.penPrice,
+                this.penBought,
+                this.penEquipped
+            )
+        }
+
+        is ShopPen.Premium -> {
+            SerializableShopPen.Premium(
+                this.color.toSerializableColor(),
+                this.penPrice,
+                this.penBought,
+                this.penEquipped
+            )
+        }
+
+        is ShopPen.Legendary -> {
+            SerializableShopPen.Legendary(
+                this.colors.toSerializableColors(),
+                this.penPrice,
+                this.penBought,
+                this.penEquipped
+            )
+        }
+    }
+}
+
+fun SerializableShopPen.toDomain(): ShopPen {
+    return when (this) {
+        is SerializableShopPen.Basic -> {
+            ShopPen.Basic(color.toColor())
+        }
+
+        is SerializableShopPen.Legendary -> {
+            ShopPen.Legendary(colors.map { it.toColor() })
+        }
+
+        is SerializableShopPen.Premium -> {
+            ShopPen.Premium(color.toColor())
+        }
+    }
+}

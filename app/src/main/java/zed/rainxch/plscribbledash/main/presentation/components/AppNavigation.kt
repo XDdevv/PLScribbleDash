@@ -29,7 +29,7 @@ fun AppNavigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = NavGraph.HomeScreen,
+        startDestination = NavGraph.ShopScreen,
         modifier = modifier.fillMaxSize()
     ) {
         composable<NavGraph.HomeScreen> {
