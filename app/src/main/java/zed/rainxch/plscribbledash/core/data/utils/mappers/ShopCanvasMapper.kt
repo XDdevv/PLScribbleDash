@@ -1,20 +1,18 @@
-package zed.rainxch.plscribbledash.core.data.mappers
+package zed.rainxch.plscribbledash.core.data.utils.mappers
 
 import zed.rainxch.plscribbledash.core.data.db.entity.ShopCanvasEntity
-import zed.rainxch.plscribbledash.core.domain.mappers.toColor
-import zed.rainxch.plscribbledash.core.domain.model.SerializableShopCanvas
 import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
 
 fun ShopCanvasEntity.toShopCanvas(): ShopCanvas {
     return when (val canvas = this.canvas) {
         is ShopCanvas.Basic -> {
-            ShopCanvas.Basic(canvas.color)
+            ShopCanvas.Basic(canvas.color, canvas.canvasPrice, canvas.canvasBought, canvas.canvasEquipped, type = canvas.type)
         }
         is ShopCanvas.Legendary -> {
-            ShopCanvas.Legendary(canvas.imageRes)
+            ShopCanvas.Legendary(canvas.imageRes, canvas.canvasPrice, canvas.canvasBought, canvas.canvasEquipped, type = canvas.type)
         }
         is ShopCanvas.Premium -> {
-            ShopCanvas.Premium(canvas.color)
+            ShopCanvas.Premium(canvas.color, canvas.canvasPrice, canvas.canvasBought, canvas.canvasEquipped, type = canvas.type)
         }
     }
 }

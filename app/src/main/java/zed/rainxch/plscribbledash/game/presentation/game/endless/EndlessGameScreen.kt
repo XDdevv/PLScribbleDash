@@ -161,7 +161,9 @@ fun EndlessGameScreen(
                             .background(Color(0xFFFFFFFF))
                             .clip(RoundedCornerShape(18.dp))
                             .clipToBounds()
-                            .drawGridLines()
+                            .drawGridLines(),
+                        shopPen = viewModel.penColor,
+                        shopCanvas = viewModel.canvasBackground
                     )
                 }
                 Spacer(Modifier.height(6.dp))

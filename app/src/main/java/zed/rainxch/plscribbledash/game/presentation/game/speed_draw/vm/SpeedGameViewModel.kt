@@ -1,8 +1,10 @@
 package zed.rainxch.plscribbledash.game.presentation.game.speed_draw.vm
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
@@ -19,6 +21,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
+import zed.rainxch.plscribbledash.core.domain.model.ShopPen
+import zed.rainxch.plscribbledash.core.domain.repository.PlayerRepository
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 import zed.rainxch.plscribbledash.game.domain.model.PaintPath
 import zed.rainxch.plscribbledash.game.domain.model.ParsedPath
@@ -39,6 +44,7 @@ class SpeedGameViewModel @Inject constructor(
     private val getRandomPathDataUseCase: GetRandomPathDataUseCase,
     private val checkHighestMehPlusUseCase: CheckMehPlusScoreUseCase,
     private val checkAverageAccuracyUseCase: CheckSpeedAverageAccuracyUseCase,
+    private val playerRepository: PlayerRepository,
     getPathsUseCase: GetGamePathsUseCase
 ) : ViewModel() {
 
@@ -89,11 +95,15 @@ class SpeedGameViewModel @Inject constructor(
             TimeUI(120, "2:00")
         )
     private var timerJob: Job? = null
+    var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White))
+    var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black))
 
     init {
         getRandomPath()
         startGame()
         startTimer()
+        getEquippedCanvas()
+        getEquippedPen()
     }
 
     fun handleCountdownTimer() {
@@ -130,6 +140,19 @@ class SpeedGameViewModel @Inject constructor(
         timerJob?.cancel()
         timerJob = null
     }
+
+    fun getEquippedCanvas()  {
+        viewModelScope.launch {
+            canvasBackground = playerRepository.getEquippedCanvas()
+        }
+    }
+
+    fun getEquippedPen()  {
+        viewModelScope.launch {
+            penColor = playerRepository.getEquippedPen()
+        }
+    }
+
 
     private fun getRandomPath() {
         viewModelScope.launch {

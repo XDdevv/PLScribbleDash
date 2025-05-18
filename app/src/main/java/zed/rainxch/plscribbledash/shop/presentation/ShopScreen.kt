@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,11 +26,17 @@ import zed.rainxch.plscribbledash.core.presentation.ui.theme.PLScribbleDashTheme
 import zed.rainxch.plscribbledash.game.presentation.components.RowIconTextComponent
 import zed.rainxch.plscribbledash.shop.presentation.components.ShopItemsPager
 import zed.rainxch.plscribbledash.shop.presentation.vm.ShopViewModel
+import androidx.compose.runtime.getValue
 
 @Composable
-fun ShopScreen(modifier: Modifier = Modifier) {
+fun ShopScreen(
+    modifier: Modifier = Modifier,
+    snackState: SnackbarHostState
+) {
     val pagerState = rememberPagerState(pageCount = { 2 })
-    val viewModel : ShopViewModel = hiltViewModel()
+
+    val viewModel: ShopViewModel = hiltViewModel()
+    val coins by viewModel.coins.collectAsState(0)
 
     Column(
         modifier = modifier
@@ -46,9 +54,10 @@ fun ShopScreen(modifier: Modifier = Modifier) {
                 text = stringResource(R.string.shop),
                 color = MaterialTheme.colorScheme.onBackground
             )
+
             RowIconTextComponent(
                 icon = R.drawable.ic_coin,
-                content = "300" // COINS
+                content = "$coins"
             )
 
         }
@@ -58,6 +67,7 @@ fun ShopScreen(modifier: Modifier = Modifier) {
         ShopItemsPager(
             state = pagerState,
             viewModel = viewModel,
+            snackState = snackState,
             modifier = Modifier.padding(16.dp)
         )
 
@@ -68,6 +78,6 @@ fun ShopScreen(modifier: Modifier = Modifier) {
 @Composable
 private fun ShopScreenPreview() {
     PLScribbleDashTheme {
-        ShopScreen()
+//        ShopScreen()
     }
 }

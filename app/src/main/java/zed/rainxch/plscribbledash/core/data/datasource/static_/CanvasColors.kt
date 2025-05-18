@@ -5,8 +5,8 @@ import zed.rainxch.plscribbledash.R
 import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
 
 val shopCanvasList = listOf(
-    ShopCanvas.Basic(Color(0xFFFFFFFF), penBought = true, penEquipped = true),
-    ShopCanvas.Basic(Color(0xFFE0E0E0)),
+    ShopCanvas.Basic(Color(0xFFFFFFFF), canvasBought = true, canvasEquipped = true),
+    ShopCanvas.Basic(Color(0xFFE0E0E0), canvasBought = true),
     ShopCanvas.Basic(Color(0xFFF5F5DC)),
     ShopCanvas.Basic(Color(0xFFB0C4DE)),
     ShopCanvas.Basic(Color(0xFFD3E8D2)),

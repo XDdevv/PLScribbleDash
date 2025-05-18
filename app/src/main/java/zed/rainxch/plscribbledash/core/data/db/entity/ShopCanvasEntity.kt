@@ -8,5 +8,5 @@ import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
 @Entity("shop_canvas")
 data class ShopCanvasEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val canvas: ShopCanvas
+    val canvas: ShopCanvas,
 )

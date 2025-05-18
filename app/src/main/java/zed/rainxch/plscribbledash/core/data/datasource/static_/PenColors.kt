@@ -5,7 +5,7 @@ import zed.rainxch.plscribbledash.core.domain.model.ShopPen
 
 val shopPenList = listOf(
     ShopPen.Basic(Color(0xFF101820), 25, true, true),
-    ShopPen.Basic(Color(0xFFB22234)),
+    ShopPen.Basic(Color(0xFFB22234), penBought = true),
     ShopPen.Basic(Color(0xFFF9D85D)),
     ShopPen.Basic(Color(0xFF1D4E89)),
     ShopPen.Basic(Color(0xFF4CAF50)),

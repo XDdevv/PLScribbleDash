@@ -1,4 +1,4 @@
-package zed.rainxch.plscribbledash.core.data.mappers
+package zed.rainxch.plscribbledash.core.data.utils.mappers
 
 import zed.rainxch.plscribbledash.core.data.db.entity.ShopPenEntity
 import zed.rainxch.plscribbledash.core.domain.model.ShopPen
@@ -6,15 +6,15 @@ import zed.rainxch.plscribbledash.core.domain.model.ShopPen
 fun ShopPenEntity.toShopPen(): ShopPen {
     return when (val pen = this.pen) {
         is ShopPen.Basic -> {
-            ShopPen.Basic(pen.color)
+            ShopPen.Basic(pen.color, pen.penPrice, pen.penBought, pen.penEquipped, pen.type)
         }
 
         is ShopPen.Legendary -> {
-            ShopPen.Legendary(pen.colors)
+            ShopPen.Legendary(pen.colors, pen.penPrice, pen.penBought, pen.penEquipped, pen.type)
         }
 
         is ShopPen.Premium -> {
-            ShopPen.Premium(pen.color)
+            ShopPen.Premium(pen.color, pen.penPrice, pen.penBought, pen.penEquipped, pen.type)
         }
     }
 }

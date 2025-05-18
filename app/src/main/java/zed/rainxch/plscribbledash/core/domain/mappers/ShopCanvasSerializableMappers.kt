@@ -8,25 +8,25 @@ fun ShopCanvas.toSerializable(): SerializableShopCanvas {
         is ShopCanvas.Basic -> {
             SerializableShopCanvas.Basic(
                 this.color.toSerializableColor(),
-                this.penPrice,
-                this.penBought,
-                this.penEquipped
+                this.canvasPrice,
+                this.canvasBought,
+                this.canvasEquipped
             )
         }
         is ShopCanvas.Legendary -> {
             SerializableShopCanvas.Legendary(
                 this.imageRes,
-                this.penPrice,
-                this.penBought,
-                this.penEquipped
+                this.canvasPrice,
+                this.canvasBought,
+                this.canvasEquipped
             )
         }
         is ShopCanvas.Premium -> {
             SerializableShopCanvas.Premium(
                 this.color.toSerializableColor(),
-                this.penPrice,
-                this.penBought,
-                this.penEquipped
+                this.canvasPrice,
+                this.canvasBought,
+                this.canvasEquipped
             )
         }
     }
@@ -35,15 +35,15 @@ fun ShopCanvas.toSerializable(): SerializableShopCanvas {
 fun SerializableShopCanvas.toDomain(): ShopCanvas {
     return when (this) {
         is SerializableShopCanvas.Basic -> {
-            ShopCanvas.Basic(serializableColor.toColor())
+            ShopCanvas.Basic(serializableColor.toColor(), canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type)
         }
 
         is SerializableShopCanvas.Legendary -> {
-            ShopCanvas.Legendary(imageRes)
+            ShopCanvas.Legendary(imageRes, canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type)
         }
 
         is SerializableShopCanvas.Premium -> {
-            ShopCanvas.Premium(serializableColor.toColor())
+            ShopCanvas.Premium(serializableColor.toColor(), canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type)
         }
     }
 }

@@ -1,15 +1,65 @@
 package zed.rainxch.plscribbledash.shop.presentation.vm
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import zed.rainxch.plscribbledash.core.data.datasource.ShopCanvasDataSource
+import zed.rainxch.plscribbledash.core.data.datasource.ShopPenDataSource
+import zed.rainxch.plscribbledash.core.domain.model.CoinOperators
+import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
+import zed.rainxch.plscribbledash.core.domain.model.ShopPen
+import zed.rainxch.plscribbledash.core.domain.repository.PlayerRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ShopViewModel @Inject constructor(
-    private val dataSource: ShopCanvasDataSource
+    private val canvasDataSource: ShopCanvasDataSource,
+    private val penDataSource: ShopPenDataSource,
+    private val playerRepository: PlayerRepository
 ) : ViewModel() {
-    fun getCanvasList() = dataSource.getCanvasList()
+    fun getCanvasList() = canvasDataSource.getCanvasList()
 
-    fun getPenList() = dataSource.getCanvasList()
+    fun getPenList() = penDataSource.getPenList()
+
+    val coins = playerRepository.getUserCoins()
+
+    var showCantAffordBuySnack by mutableStateOf(false)
+        private set
+
+    fun handlePenClick(pen: ShopPen) {
+        viewModelScope.launch {
+            if (pen.price > coins.first() && !pen.bought) {
+                showCantAffordBuySnack = true
+                delay(2000)
+                showCantAffordBuySnack = false
+                return@launch
+            }
+            if (!pen.bought) {
+                playerRepository.updateCoins(pen.price, CoinOperators.SUBTRACT)
+                playerRepository.setEquippedPen(pen)
+            }
+        }
+    }
+
+    fun handleCanvasClick(canvas: ShopCanvas) {
+        viewModelScope.launch {
+            if (canvas.price > coins.first()&& !canvas.bought) {
+                showCantAffordBuySnack = true
+                delay(2000)
+                showCantAffordBuySnack = false
+                return@launch
+            }
+
+            if (!canvas.bought) {
+                playerRepository.updateCoins(canvas.price, CoinOperators.SUBTRACT)
+                playerRepository.setEquippedCanvas(canvas)
+            }
+        }
+    }
 }

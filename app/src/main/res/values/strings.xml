@@ -67,4 +67,7 @@
     <string name="shop">Shop</string>
     <string name="pen">Pen</string>
     <string name="canvas">Canvas</string>
+    <string name="template_pen">Template pen</string>
+    <string name="cart_icon">Cart icon</string>
+    <string name="lock">Lock</string>
 </resources>

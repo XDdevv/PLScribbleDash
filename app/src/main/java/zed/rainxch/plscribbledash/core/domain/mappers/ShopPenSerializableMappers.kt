@@ -45,15 +45,15 @@ fun ShopPen.toSerializable(): SerializableShopPen {
 fun SerializableShopPen.toDomain(): ShopPen {
     return when (this) {
         is SerializableShopPen.Basic -> {
-            ShopPen.Basic(color.toColor())
+            ShopPen.Basic(color.toColor(), penBought = penBought, penEquipped = penEquipped, type = type)
         }
 
         is SerializableShopPen.Legendary -> {
-            ShopPen.Legendary(colors.map { it.toColor() })
+            ShopPen.Legendary(colors.map { it.toColor() }, penBought = penBought, penEquipped = penEquipped, type = type)
         }
 
         is SerializableShopPen.Premium -> {
-            ShopPen.Premium(color.toColor())
+            ShopPen.Premium(color.toColor(), penBought = penBought, penEquipped = penEquipped, type = type)
         }
     }
 }

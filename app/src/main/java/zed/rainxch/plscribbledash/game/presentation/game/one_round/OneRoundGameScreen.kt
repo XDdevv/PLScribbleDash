@@ -160,7 +160,9 @@ fun OneRoundGameScreen(
                             .background(Color.White)
                             .clip(RoundedCornerShape(18.dp))
                             .clipToBounds()
-                            .drawGridLines()
+                            .drawGridLines(),
+                        shopCanvas = viewModel.canvasBackground,
+                        shopPen = viewModel.penColor
                     )
                 }
                 Spacer(Modifier.height(6.dp))

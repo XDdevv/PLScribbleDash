@@ -21,7 +21,7 @@ class DataStoreManager @Inject constructor(
         .map { it[EQUIPPED_PEN_ID] ?: -1 }
 
     val coins: Flow<Int> = dataStore.data
-        .map { it[COINS] ?: -1 }
+        .map { it[COINS] ?: 0 }
 
     suspend fun setEquippedCanvasId(id: Int) {
         dataStore.edit { prefs ->

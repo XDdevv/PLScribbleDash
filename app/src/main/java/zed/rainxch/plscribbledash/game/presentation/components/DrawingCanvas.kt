@@ -13,6 +13,8 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.StrokeJoin
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
+import zed.rainxch.plscribbledash.core.domain.model.ShopPen
 import zed.rainxch.plscribbledash.game.domain.model.PaintPath
 
 @Composable
@@ -23,7 +25,9 @@ fun DrawingCanvas(
     onTouchMove : (Offset) -> Unit,
     onTouchEnd : () -> Unit,
     modifier: Modifier = Modifier,
-    isEnabled : Boolean = true
+    isEnabled : Boolean = true,
+    shopPen: ShopPen,
+    shopCanvas: ShopCanvas
 ) {
     Canvas(
         modifier = modifier
@@ -59,15 +63,30 @@ fun DrawingCanvas(
                     }
                 }
 
-                drawPath(
-                    path = path,
-                    color = paintPath.color,
-                    style = Stroke(
-                        width = paintPath.strokeWidth,
-                        cap = StrokeCap.Round,
-                        join = StrokeJoin.Round
-                    )
-                )
+                when (val state = shopPen) {
+                    is ShopPen.Basic, is ShopPen.Premium -> {
+                        drawPath(
+                            path = path,
+                            color = state.penColor,
+                            style = Stroke(
+                                width = paintPath.strokeWidth,
+                                cap = StrokeCap.Round,
+                                join = StrokeJoin.Round
+                            )
+                        )
+                    }
+                    is ShopPen.Legendary -> {
+                        drawPath(
+                            path = path,
+                            brush = state.brush(),
+                            style = Stroke(
+                                width = paintPath.strokeWidth,
+                                cap = StrokeCap.Round,
+                                join = StrokeJoin.Round
+                            )
+                        )
+                    }
+                }
             }
         }
 
@@ -93,15 +112,30 @@ fun DrawingCanvas(
                     }
                 }
 
-                drawPath(
-                    path = path,
-                    color = paintPath.color,
-                    style = Stroke(
-                        width = paintPath.strokeWidth,
-                        cap = StrokeCap.Round,
-                        join = StrokeJoin.Round
-                    )
-                )
+                when (val state = shopPen) {
+                    is ShopPen.Basic, is ShopPen.Premium -> {
+                        drawPath(
+                            path = path,
+                            color = state.penColor,
+                            style = Stroke(
+                                width = paintPath.strokeWidth,
+                                cap = StrokeCap.Round,
+                                join = StrokeJoin.Round
+                            )
+                        )
+                    }
+                    is ShopPen.Legendary -> {
+                        drawPath(
+                            path = path,
+                            brush = state.brush(),
+                            style = Stroke(
+                                width = paintPath.strokeWidth,
+                                cap = StrokeCap.Round,
+                                join = StrokeJoin.Round
+                            )
+                        )
+                    }
+                }
             }
         }
 

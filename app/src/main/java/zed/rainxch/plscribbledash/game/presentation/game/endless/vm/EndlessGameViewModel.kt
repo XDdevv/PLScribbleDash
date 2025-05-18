@@ -1,8 +1,10 @@
 package zed.rainxch.plscribbledash.game.presentation.game.endless.vm
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
@@ -14,6 +16,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import zed.rainxch.plscribbledash.R
+import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
+import zed.rainxch.plscribbledash.core.domain.model.ShopPen
+import zed.rainxch.plscribbledash.core.domain.repository.PlayerRepository
 import zed.rainxch.plscribbledash.core.presentation.utils.UiText
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 import zed.rainxch.plscribbledash.game.domain.model.PaintPath
@@ -34,6 +39,7 @@ class EndlessGameViewModel @Inject constructor(
     private val getRandomPathDataUseCase: GetRandomPathDataUseCase,
     private val checkHighestGoodPlusUseCase: CheckGoodPlusScoreUseCase,
     private val checkAverageAccuracyUseCase: CheckEndlessAverageAccuracyUseCase,
+    private val playerRepository: PlayerRepository,
     getPathsUseCase: GetGamePathsUseCase
 ) : ViewModel() {
 
@@ -70,15 +76,32 @@ class EndlessGameViewModel @Inject constructor(
     private var _randomPath: MutableStateFlow<ParsedPath?> = MutableStateFlow(null)
     val randomPath = _randomPath.asStateFlow()
 
+    var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White))
+    var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black))
+
     init {
         getRandomPath()
         startGame()
         startTimer()
+        getEquippedCanvas()
+        getEquippedPen()
     }
 
     private fun getRandomPath() {
         viewModelScope.launch {
             _randomPath.emit(getRandomPathDataUseCase())
+        }
+    }
+
+    fun getEquippedCanvas()  {
+        viewModelScope.launch {
+            canvasBackground = playerRepository.getEquippedCanvas()
+        }
+    }
+
+    fun getEquippedPen()  {
+        viewModelScope.launch {
+            penColor = playerRepository.getEquippedPen()
         }
     }
 

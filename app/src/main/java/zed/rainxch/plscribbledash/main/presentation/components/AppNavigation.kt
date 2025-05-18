@@ -1,6 +1,7 @@
 package zed.rainxch.plscribbledash.main.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -25,7 +26,8 @@ import kotlin.reflect.typeOf
 @Composable
 fun AppNavigation(
     navController: NavHostController,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    snackState: SnackbarHostState
 ) {
     NavHost(
         navController = navController,
@@ -41,7 +43,7 @@ fun AppNavigation(
         }
 
         composable<NavGraph.ShopScreen> {
-            ShopScreen()
+            ShopScreen(snackState = snackState)
         }
 
         composable<NavGraph.DifficultyModeScreen> { backStackEntry ->

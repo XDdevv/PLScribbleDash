@@ -50,6 +50,7 @@ import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 import zed.rainxch.plscribbledash.game.domain.model.toPath
 import zed.rainxch.plscribbledash.game.presentation.components.RowIconTextComponent
 import zed.rainxch.plscribbledash.game.presentation.components.DrawingCanvas
+import zed.rainxch.plscribbledash.game.presentation.components.drawGridLines
 import zed.rainxch.plscribbledash.game.presentation.game.speed_draw.components.CircleTimer
 import zed.rainxch.plscribbledash.game.presentation.game.speed_draw.utils.SpeedGameState
 import zed.rainxch.plscribbledash.game.presentation.game.speed_draw.vm.SpeedGameViewModel
@@ -233,35 +234,9 @@ fun SpeedDrawGameScreen(
                             .background(Color(0xFFFFFFFF))
                             .clip(RoundedCornerShape(18.dp))
                             .clipToBounds()
-                            .drawBehind {
-                                val cellSize = size.width / 3
-                                for (i in 1..2) {
-                                    drawLine(
-                                        color = Color(0xFFF6F1EC),
-                                        start = Offset(i * cellSize, 0f),
-                                        end = Offset(i * cellSize, size.height),
-                                        strokeWidth = 1.dp.toPx(),
-                                        alpha = .7f
-                                    )
-                                    drawLine(
-                                        color = Color(0xFFF6F1EC),
-                                        start = Offset(0f, i * cellSize),
-                                        end = Offset(size.width, i * cellSize),
-                                        strokeWidth = 1.dp.toPx(),
-                                        alpha = .7f
-                                    )
-                                }
-
-                                val borderWidth = 2.dp.toPx()
-                                val cornerRadius = 18.dp.toPx()
-
-                                drawRoundRect(
-                                    color = Color(0xFFF6F1EC),
-                                    size = Size(size.width, size.height),
-                                    cornerRadius = CornerRadius(cornerRadius, cornerRadius),
-                                    style = Stroke(width = borderWidth)
-                                )
-                            }
+                            .drawGridLines(),
+                        shopCanvas = viewModel.canvasBackground,
+                        shopPen = viewModel.penColor
                     )
                 }
                 Spacer(Modifier.height(6.dp))

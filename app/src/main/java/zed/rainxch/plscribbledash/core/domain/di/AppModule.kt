@@ -26,6 +26,9 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import zed.rainxch.plscribbledash.core.data.datasource.ShopCanvasDataSource
 import zed.rainxch.plscribbledash.core.data.db.dao.ShopCanvasDao
 import zed.rainxch.plscribbledash.core.data.db.dao.ShopPenDao
+import zed.rainxch.plscribbledash.core.data.repository.PlayerRepositoryImpl
+import zed.rainxch.plscribbledash.core.data.utils.managers.DataStoreManager
+import zed.rainxch.plscribbledash.core.domain.repository.PlayerRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -49,6 +52,12 @@ abstract class AppModule {
         impl: StatisticsRepositoryImpl
     ): StatisticsRepository
 
+    @Binds
+    @Singleton
+    abstract fun bindPlayerRepository(
+        impl: PlayerRepositoryImpl
+    ): PlayerRepository
+
     companion object {
         @Provides
         fun provideContext(application: Application): Context {
@@ -57,7 +66,7 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideDatabase(application: Application) : AppDatabase {
+        fun provideDatabase(application: Application): AppDatabase {
             return Room.databaseBuilder(
                 context = application,
                 klass = AppDatabase::class.java,
@@ -69,11 +78,13 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideStatisticsDao(appDatabase: AppDatabase): StatisticsDao = appDatabase.statisticsDao
+        fun provideStatisticsDao(appDatabase: AppDatabase): StatisticsDao =
+            appDatabase.statisticsDao
 
         @Provides
         @Singleton
-        fun provideShopCanvasDao(appDatabase: AppDatabase): ShopCanvasDao = appDatabase.shopCanvasDao
+        fun provideShopCanvasDao(appDatabase: AppDatabase): ShopCanvasDao =
+            appDatabase.shopCanvasDao
 
         @Provides
         @Singleton
@@ -81,7 +92,8 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideShopCanvasDataSource(shopCanvasDao: ShopCanvasDao) = ShopCanvasDataSource(shopCanvasDao)
+        fun provideShopCanvasDataSource(shopCanvasDao: ShopCanvasDao) =
+            ShopCanvasDataSource(shopCanvasDao)
 
         @Provides
         @Singleton
@@ -91,10 +103,15 @@ abstract class AppModule {
 
         @Provides
         @Singleton
-        fun provideDataStorePreferences(@ApplicationContext context: Context) : DataStore<Preferences> {
+        fun provideDataStorePreferences(@ApplicationContext context: Context): DataStore<Preferences> {
             return PreferenceDataStoreFactory.create(
                 produceFile = { context.preferencesDataStoreFile("player") }
             )
         }
+
+        @Provides
+        @Singleton
+        fun provideDataStoreManager(dataStore: DataStore<Preferences>): DataStoreManager =
+            DataStoreManager(dataStore = dataStore)
     }
 }
