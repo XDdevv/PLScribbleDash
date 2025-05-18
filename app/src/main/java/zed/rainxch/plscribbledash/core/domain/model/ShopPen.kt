@@ -3,11 +3,7 @@ package zed.rainxch.plscribbledash.core.domain.model
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-sealed class ShopPen(
-    val price: Int,
-    val bought: Boolean,
-    val equipped: Boolean
-) {
+sealed class ShopPen() {
     abstract val type: String
     data class Basic(
         val color: Color,
@@ -15,7 +11,7 @@ sealed class ShopPen(
         val penBought: Boolean = false,
         val penEquipped: Boolean = false,
         override val type: String = "Basic",
-    ) : ShopPen(penPrice, penBought, penEquipped)
+    ) : ShopPen()
 
     data class Premium(
         val color: Color,
@@ -23,7 +19,7 @@ sealed class ShopPen(
         val penBought: Boolean = false,
         val penEquipped: Boolean = false,
         override val type: String = "Premium",
-    ) : ShopPen(penPrice, penBought, penEquipped)
+    ) : ShopPen()
 
     data class Legendary(
         val colors: List<Color>,
@@ -31,7 +27,7 @@ sealed class ShopPen(
         val penBought: Boolean = false,
         val penEquipped: Boolean = false,
         override val type: String = "Legendary",
-    ) : ShopPen(penPrice, penBought, penEquipped) {
+    ) : ShopPen() {
         fun toBrush() = Brush.horizontalGradient(colors)
     }
 }

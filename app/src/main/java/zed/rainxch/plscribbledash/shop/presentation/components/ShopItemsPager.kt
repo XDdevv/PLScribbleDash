@@ -1,9 +1,11 @@
 package zed.rainxch.plscribbledash.shop.presentation.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -17,6 +19,9 @@ import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
 import zed.rainxch.plscribbledash.shop.presentation.vm.ShopViewModel
 import androidx.compose.runtime.getValue
 
+const val SHOP_PENS_INDEX = 0
+const val SHOP_CANVAS_INDEX = 1
+
 @Composable
 fun ShopItemsPager(
     state: PagerState,
@@ -25,7 +30,8 @@ fun ShopItemsPager(
 ) {
     val tabTitles = listOf(stringResource(R.string.pen), stringResource(R.string.canvas))
     val coroutineScope = rememberCoroutineScope()
-    val shopCanvases by viewModel.getCanvases().collectAsState(listOf(ShopCanvas.Basic(Color.Green)))
+    val shopCanvasList by viewModel.getCanvasList().collectAsState(listOf(ShopCanvas.Basic(Color.Green)))
+    val shopPenList by viewModel.getPenList().collectAsState(listOf(ShopCanvas.Basic(Color.Green)))
 
     Column(modifier = modifier) {
         ShopTabItems(
@@ -41,12 +47,19 @@ fun ShopItemsPager(
         HorizontalPager(
             state = state,
         ) {
-            if (state.currentPage == 0) {
-                Text("pen boi's")
-                println("hallo $shopCanvases")
+            if (state.currentPage == SHOP_PENS_INDEX) {
+                LazyVerticalGrid(columns = GridCells.Fixed(3)) {
+                    items(shopPenList) { pen ->
+//                        ShopItemPen(shopPen = pen)
+                    }
+                }
             }
             if (state.currentPage == 1) {
-                Text("canvas boi's")
+                LazyVerticalGrid(columns = GridCells.Fixed(3)) {
+                    items(shopCanvasList) { canvas ->
+                        ShopItemCanvas(shopCanvas = canvas)
+                    }
+                }
             }
         }
     }

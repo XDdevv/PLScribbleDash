@@ -14,11 +14,17 @@ interface ShopCanvasDao {
     fun getCanvasById(id: Int): Flow<ShopCanvasEntity?>
 
     @Insert
-    fun insertAllCanvases(list: List<ShopCanvasEntity>)
+    suspend fun insertAllCanvases(list: List<ShopCanvasEntity>)
 
     @Update
     fun updateCanvas(canvas: ShopCanvasEntity)
 
     @Query("SELECT * FROM shop_canvas")
-    fun getCanvasList() : Flow<List<ShopCanvasEntity>>
+    fun getCanvasList(): Flow<List<ShopCanvasEntity>>
+
+    @Query("SELECT COUNT(*) FROM shop_canvas")
+    fun getCanvasCount(): Int
+
+    @Query("DELETE from shop_canvas")
+    suspend fun clearCanvasList() : Int
 }

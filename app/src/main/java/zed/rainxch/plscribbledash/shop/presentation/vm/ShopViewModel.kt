@@ -9,8 +9,7 @@ import javax.inject.Inject
 class ShopViewModel @Inject constructor(
     private val dataSource: ShopCanvasDataSource
 ) : ViewModel() {
-    fun getCanvases() = dataSource.getCanvasList()
-    init {
-        dataSource.insertCanvases()
-    }
+    fun getCanvasList() = dataSource.getCanvasList()
+
+    fun getPenList() = dataSource.getCanvasList()
 }
