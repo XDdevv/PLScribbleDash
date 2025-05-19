@@ -21,10 +21,13 @@ interface ShopCanvasDao {
     suspend fun getCanvasIdByCanvas(canvas: ShopCanvas): Int?
 
     @Update
-    fun updateCanvas(canvas: ShopCanvasEntity)
+    suspend fun updateCanvas(canvas: ShopCanvasEntity)
 
-//    @Query("SELECT * FROM shop_canvas WHERE canvas.equipped = true")
-//    fun getEquippedCanvas() : ShopCanvasEntity
+    @Query("SELECT * FROM shop_canvas WHERE equipped = 1 LIMIT 1")
+    suspend fun getEquippedCanvas() : ShopCanvasEntity?
+
+    @Query("SELECT * FROM shop_canvas WHERE canvas = :canvas LIMIT 1")
+    suspend fun getCanvasEntityByCanvas(canvas: ShopCanvas) : ShopCanvasEntity?
 
     @Query("SELECT * FROM shop_canvas")
     fun getCanvasList(): Flow<List<ShopCanvasEntity>>

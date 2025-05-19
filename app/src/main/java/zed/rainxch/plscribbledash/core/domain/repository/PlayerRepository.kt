@@ -13,6 +13,9 @@ interface PlayerRepository {
     suspend fun getEquippedPen(): ShopPen
     suspend fun getEquippedCanvas(): ShopCanvas
 
+    suspend fun buyCanvas(canvas: ShopCanvas)
+    suspend fun buyPen(pen: ShopPen)
+
     suspend fun setEquippedCanvas(shopCanvas: ShopCanvas)
     suspend fun setEquippedPen(shopPen: ShopPen)
 }

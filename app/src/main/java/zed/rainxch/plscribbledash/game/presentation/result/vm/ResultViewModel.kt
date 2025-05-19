@@ -1,10 +1,44 @@
 package zed.rainxch.plscribbledash.game.presentation.result.vm
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import zed.rainxch.plscribbledash.R
+import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
+import zed.rainxch.plscribbledash.core.domain.model.ShopPen
+import zed.rainxch.plscribbledash.core.domain.repository.PlayerRepository
 import zed.rainxch.plscribbledash.core.presentation.utils.UiText
+import javax.inject.Inject
 
-class ResultViewModel : ViewModel() {
+@HiltViewModel
+class ResultViewModel @Inject constructor(
+    private val playerRepository: PlayerRepository
+) : ViewModel() {
+    var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White))
+    var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black))
+
+    init {
+        getEquippedCanvas()
+        getEquippedPen()
+    }
+    fun getEquippedCanvas()  {
+        viewModelScope.launch {
+            canvasBackground = playerRepository.getEquippedCanvas()
+        }
+    }
+
+    fun getEquippedPen()  {
+        viewModelScope.launch {
+            penColor = playerRepository.getEquippedPen()
+        }
+    }
+
+
     fun getRandomTitle(rate: Int): UiText {
         return when (rate) {
             in 0..40 -> UiText.StringResource(R.string.oops)

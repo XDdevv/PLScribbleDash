@@ -124,7 +124,7 @@ class GameViewModel @Inject constructor(
     fun getEquippedPen()  {
         viewModelScope.launch {
             penColor = playerRepository.getEquippedPen()
-            println()
+            println(penColor.penColor)
         }
     }
 

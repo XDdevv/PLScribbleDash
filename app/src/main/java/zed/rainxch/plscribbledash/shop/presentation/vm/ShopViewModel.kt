@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -23,7 +24,7 @@ class ShopViewModel @Inject constructor(
     private val penDataSource: ShopPenDataSource,
     private val playerRepository: PlayerRepository
 ) : ViewModel() {
-    fun getCanvasList() = canvasDataSource.getCanvasList()
+    fun getCanvasList() = canvasDataSource.getShopCanvasList()
 
     fun getPenList() = penDataSource.getPenList()
 
@@ -33,22 +34,24 @@ class ShopViewModel @Inject constructor(
         private set
 
     fun handlePenClick(pen: ShopPen) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (pen.price > coins.first() && !pen.bought) {
                 showCantAffordBuySnack = true
                 delay(2000)
                 showCantAffordBuySnack = false
                 return@launch
             }
+
             if (!pen.bought) {
-                playerRepository.updateCoins(pen.price, CoinOperators.SUBTRACT)
+                playerRepository.buyPen(pen)
+            } else {
                 playerRepository.setEquippedPen(pen)
             }
         }
     }
 
     fun handleCanvasClick(canvas: ShopCanvas) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             if (canvas.price > coins.first()&& !canvas.bought) {
                 showCantAffordBuySnack = true
                 delay(2000)
@@ -57,7 +60,8 @@ class ShopViewModel @Inject constructor(
             }
 
             if (!canvas.bought) {
-                playerRepository.updateCoins(canvas.price, CoinOperators.SUBTRACT)
+                playerRepository.buyCanvas(canvas)
+            } else {
                 playerRepository.setEquippedCanvas(canvas)
             }
         }

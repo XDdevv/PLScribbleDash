@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import zed.rainxch.plscribbledash.core.data.datasource.static_.shopCanvasList
 import zed.rainxch.plscribbledash.core.data.db.dao.ShopCanvasDao
+import zed.rainxch.plscribbledash.core.data.db.entity.ShopCanvasEntity
 import zed.rainxch.plscribbledash.core.data.utils.mappers.toShopCanvas
 import zed.rainxch.plscribbledash.core.data.utils.mappers.toShopEntity
 import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
@@ -14,21 +15,27 @@ import javax.inject.Inject
 class ShopCanvasDataSource @Inject constructor(
     private val shopDao: ShopCanvasDao
 ) {
-    fun getCanvasList(): Flow<List<ShopCanvas>> {
+    fun getShopCanvasList(): Flow<List<ShopCanvas>> {
         return shopDao.getCanvasList()
             .map { it.map { it.toShopCanvas() } }
-            .flowOn(Dispatchers.Default)
+            .flowOn(Dispatchers.IO)
     }
 
-    suspend fun getIdByCanvas(canvas: ShopCanvas) : Int {
+    fun getEntityCanvasList(): Flow<List<ShopCanvasEntity>> {
+        return shopDao.getCanvasList().flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getIdByCanvas(canvas: ShopCanvas): Int {
         return shopDao.getCanvasIdByCanvas(canvas) ?: -1
     }
 
     suspend fun setEquippedCanvas(canvas: ShopCanvas) {
         val canvasId = shopDao.getCanvasIdByCanvas(canvas) ?: 0
-//        shopDao.updateCanvas()
         shopDao.getCanvasCount()
     }
+
+    suspend fun getCanvasEntityByCanvas(canvas: ShopCanvas) =
+        shopDao.getCanvasEntityByCanvas(canvas)
 
     suspend fun insertCanvases() {
         shopDao.insertAllCanvases(shopCanvasList.map { it.toShopEntity() })
@@ -37,4 +44,12 @@ class ShopCanvasDataSource @Inject constructor(
     fun getCanvasById(id: Int) = shopDao.getCanvasById(id)
 
     fun canvasCount() = shopDao.getCanvasCount()
+
+    suspend fun getEquippedCanvas() : ShopCanvasEntity? {
+        return shopDao.getEquippedCanvas()
+    }
+
+    suspend fun updateCanvas(canvas: ShopCanvasEntity) {
+        shopDao.updateCanvas(canvas)
+    }
 }

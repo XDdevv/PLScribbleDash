@@ -157,11 +157,7 @@ fun EndlessGameScreen(
                         onTouchMove = { viewModel.onTouchMove(it) },
                         onTouchEnd = { viewModel.onTouchEnd() },
                         modifier = Modifier
-                            .size(350.dp)
-                            .background(Color(0xFFFFFFFF))
-                            .clip(RoundedCornerShape(18.dp))
-                            .clipToBounds()
-                            .drawGridLines(),
+                            .size(350.dp),
                         shopPen = viewModel.penColor,
                         shopCanvas = viewModel.canvasBackground
                     )

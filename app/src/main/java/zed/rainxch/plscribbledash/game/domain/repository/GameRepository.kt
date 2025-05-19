@@ -11,4 +11,6 @@ interface GameRepository {
         exampleParsedPath: ParsedPath,
         difficultyLevelOption: DifficultyLevelOptions
     ): Int
+
+    suspend fun earnCoin(score: Int, mode: DifficultyLevelOptions)
 }

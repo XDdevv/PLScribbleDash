@@ -15,7 +15,7 @@ import zed.rainxch.plscribbledash.core.data.db.entity.StatisticEntity
 @TypeConverters(ShopPenTypeConverter::class, ShopCanvasTypeConverter::class)
 @Database(
     entities = [StatisticEntity::class, ShopPenEntity::class, ShopCanvasEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {

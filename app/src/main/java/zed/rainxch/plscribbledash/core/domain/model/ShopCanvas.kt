@@ -6,6 +6,7 @@ sealed class ShopCanvas(
     val price: Int,
     val bought: Boolean,
     val equipped: Boolean,
+    val bColor: Color
 ) {
     abstract val type: String
 
@@ -15,7 +16,7 @@ sealed class ShopCanvas(
         val canvasBought: Boolean = false,
         val canvasEquipped: Boolean = false,
         override val type: String = "Basic"
-    ) : ShopCanvas(canvasPrice, canvasBought, canvasEquipped)
+    ) : ShopCanvas(canvasPrice, canvasBought, canvasEquipped, color)
 
     data class Premium(
         val color: Color,
@@ -23,7 +24,7 @@ sealed class ShopCanvas(
         val canvasBought: Boolean = false,
         val canvasEquipped: Boolean = false,
         override val type: String = "Premium"
-    ) : ShopCanvas(canvasPrice, canvasBought, canvasEquipped)
+    ) : ShopCanvas(canvasPrice, canvasBought, canvasEquipped, color)
 
     data class Legendary(
         val imageRes: Int,
@@ -31,5 +32,5 @@ sealed class ShopCanvas(
         val canvasBought: Boolean = false,
         val canvasEquipped: Boolean = false,
         override val type: String = "Legendary"
-    ) : ShopCanvas(canvasPrice, canvasBought, canvasEquipped)
+    ) : ShopCanvas(canvasPrice, canvasBought, canvasEquipped, Color.Black)
 }

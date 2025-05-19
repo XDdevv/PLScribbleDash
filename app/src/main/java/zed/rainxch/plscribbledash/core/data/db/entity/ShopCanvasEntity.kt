@@ -9,4 +9,6 @@ import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
 data class ShopCanvasEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val canvas: ShopCanvas,
+    val equipped: Boolean,
+    val bought: Boolean
 )

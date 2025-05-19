@@ -16,20 +16,43 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.toColorInt
 import androidx.core.graphics.withSave
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
+import zed.rainxch.plscribbledash.core.data.utils.managers.DataStoreManager
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 import zed.rainxch.plscribbledash.game.domain.model.PaintPath
 import zed.rainxch.plscribbledash.game.domain.model.ParsedPath
 import zed.rainxch.plscribbledash.game.domain.model.PathData
 import zed.rainxch.plscribbledash.game.domain.repository.GameRepository
 import javax.inject.Inject
+import kotlin.math.ceil
 import kotlin.math.min
 import kotlin.math.sqrt
 
 class GameRepositoryImpl @Inject constructor(
-    private val context: Context
+    private val context: Context,
+    private val dataStoreManager: DataStoreManager
 ) : GameRepository {
+
+
+    override suspend fun earnCoin(
+        score: Int,
+        mode: DifficultyLevelOptions
+    ) {
+        val scoreInCoins = when(score) {
+            in 0..39 -> 1
+            in 40 .. 79 -> 2
+            in 80 .. 89 -> 4
+            in 90 .. 100 -> 6
+            else -> 0
+        }
+
+        val scopeMultiplied = (scoreInCoins * mode.scoreMultiplier).toInt()
+
+        dataStoreManager.setCoins(dataStoreManager.coins.first() + scopeMultiplied)
+    }
+
     private fun parseDimensionValue(value: String): Int {
         if (value.isEmpty()) return 0
 
@@ -289,6 +312,8 @@ class GameRepositoryImpl @Inject constructor(
             return@withContext finalScore
         }
     }
+
+
 
     /**
      * Calculate a balanced base score from the main metrics

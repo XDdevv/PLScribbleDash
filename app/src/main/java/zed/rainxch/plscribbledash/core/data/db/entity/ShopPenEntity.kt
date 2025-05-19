@@ -8,5 +8,7 @@ import zed.rainxch.plscribbledash.core.domain.model.ShopPen
 @Entity("shop_pen")
 data class ShopPenEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val pen: ShopPen
+    val pen: ShopPen,
+    val equipped: Boolean,
+    val bought: Boolean
 )

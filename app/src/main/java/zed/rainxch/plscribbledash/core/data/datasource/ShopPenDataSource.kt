@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import zed.rainxch.plscribbledash.core.data.datasource.static_.shopPenList
 import zed.rainxch.plscribbledash.core.data.db.dao.ShopPenDao
+import zed.rainxch.plscribbledash.core.data.db.entity.ShopPenEntity
 import zed.rainxch.plscribbledash.core.data.utils.mappers.toShopEntity
 import zed.rainxch.plscribbledash.core.data.utils.mappers.toShopPen
 import zed.rainxch.plscribbledash.core.domain.model.ShopPen
@@ -29,7 +30,17 @@ class ShopPenDataSource @Inject constructor(
         shopDao.insertAllPens(shopPenList.map { it.toShopEntity() })
     }
 
+    suspend fun getEquippedPen() : ShopPenEntity {
+        return shopDao.getEquippedPen()
+    }
+
+    suspend fun getPenEntityByPen(pen: ShopPen) = shopDao.getPenEntityByPen(pen)
+
+    suspend fun updatePen(pen: ShopPenEntity) {
+        shopDao.updatePen(pen)
+    }
+
     fun penCount() = shopDao.getPenCount()
 
-    fun getPenById(id: Int) = shopDao.getPenById(id)
+    suspend fun getPenById(id: Int) = shopDao.getPenById(id)
 }

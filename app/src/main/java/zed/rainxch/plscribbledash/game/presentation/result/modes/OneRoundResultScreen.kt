@@ -138,7 +138,9 @@ fun OneRoundWonderGameScreen(
                         .padding(12.dp)
                 ) {
                     ScaledDrawingCanvas(
-                        userPaths = userDrawnPaths
+                        userPaths = userDrawnPaths,
+                        shopPen = viewModel.penColor,
+                        canvasColor = viewModel.canvasBackground
                     )
                 }
             }

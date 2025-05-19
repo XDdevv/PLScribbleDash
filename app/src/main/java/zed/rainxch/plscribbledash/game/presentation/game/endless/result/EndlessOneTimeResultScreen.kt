@@ -174,7 +174,9 @@ fun EndlessOneTimeResultScreen(
                                 userPaths = state.userDrawnPath,
                                 modifier = Modifier.size(150.dp),
                                 drawBackground = true,
-                                drawGrid = true
+                                drawGrid = true,
+                                canvasColor = viewModel.canvasBackground,
+                                shopPen = viewModel.penColor
                             )
                         }
                     }
