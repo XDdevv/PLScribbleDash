@@ -269,7 +269,7 @@ fun SpeedDrawGameScreen(
                         )
                     }
                     GreenButton(
-                        text = "DONE",
+                        text = stringResource(R.string.done),
                         onClick = {
                             viewModel.onStateChanged(SpeedGameState.CONTINUE)
                         },
@@ -285,7 +285,8 @@ fun SpeedDrawGameScreen(
                             averageScore = state.averageScore,
                             mehPlusCount = state.mehPlusCount,
                             isMehPlusHighScore = state.isMehPlusHighScore,
-                            isAverageAccuracyHighScore = state.isAverageAccuracyHighScore
+                            isAverageAccuracyHighScore = state.isAverageAccuracyHighScore,
+                            coins = state.coins
                         )
                     )
                 )

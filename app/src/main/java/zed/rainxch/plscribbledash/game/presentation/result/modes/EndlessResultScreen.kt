@@ -1,14 +1,17 @@
 package zed.rainxch.plscribbledash.game.presentation.result.modes
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -143,21 +146,35 @@ fun EndlessResultScreen(
                     .align(Alignment.CenterHorizontally)
             )
             Spacer(Modifier.height(16.dp))
-            RowIconTextComponent(
-                icon = R.drawable.ic_palette,
-                content = state.mehPlusCount.toString(),
-                backgroundColor = if (state.isMehPlusHighScore) Color(0xffED6363) else MaterialTheme.colorScheme.surfaceContainerHigh,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(8.dp)
-            )
-            if (state.isMehPlusHighScore) {
-                LabelSmallText(
-                    text = stringResource(R.string.new_high),
-                    textColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .align(Alignment.CenterHorizontally)
+            Row (
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    RowIconTextComponent(
+                        icon = R.drawable.ic_palette,
+                        content = state.mehPlusCount.toString(),
+                        backgroundColor = if (state.isMehPlusHighScore) Color(0xffED6363) else MaterialTheme.colorScheme.surfaceContainerHigh,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(8.dp)
+                    )
+
+                    if (state.isMehPlusHighScore) {
+                        LabelSmallText(
+                            text = stringResource(R.string.new_high),
+                            textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .align(Alignment.CenterHorizontally)
+                        )
+                    }
+                }
+                Spacer(Modifier.width(16.dp))
+                RowIconTextComponent(
+                    R.drawable.ic_coin,
+                    "+${state.coins}"
                 )
             }
         }

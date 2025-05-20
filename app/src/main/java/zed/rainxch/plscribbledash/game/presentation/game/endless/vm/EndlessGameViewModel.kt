@@ -3,6 +3,7 @@ package zed.rainxch.plscribbledash.game.presentation.game.endless.vm
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
@@ -78,6 +79,7 @@ class EndlessGameViewModel @Inject constructor(
 
     var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White))
     var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black))
+    var coins by mutableIntStateOf(0)
 
     init {
         getRandomPath()
@@ -168,6 +170,7 @@ class EndlessGameViewModel @Inject constructor(
                     _goodPaintCounter.value,
                     checkHighestGoodPlusUseCase(_goodPaintCounter.value),
                     checkAverageAccuracyUseCase(_averageAccuracy.value),
+                    coins
                 )
             )
         }
@@ -190,12 +193,17 @@ class EndlessGameViewModel @Inject constructor(
                 exampleParsedPath = randomPath.value ?: ParsedPath(emptyList(), 0, 0, 0f, 0f),
                 difficultyLevelOption = difficultyLevelOption
             )
+            var gainedCoins = gameRepository.earnCoin(
+                score,
+                difficultyLevelOption
+            )
             _randomPath.value?.let { randomPath ->
                 _gameState.emit(
                     EndlessGameState.RESULT(
                         score = score,
                         previewPaths = randomPath,
-                        userDrawnPath = paths.value
+                        userDrawnPath = paths.value,
+                        gainedCoins
                     )
                 )
             }
@@ -203,6 +211,7 @@ class EndlessGameViewModel @Inject constructor(
                 _goodPaintCounter.value = _goodPaintCounter.value + 1
             }
             _totalPercentage.value = _totalPercentage.value + score
+            coins += gainedCoins
             _totalCounter.value = _totalCounter.value + 1
             _averageAccuracy.value = _totalPercentage.value / _totalCounter.value
         }

@@ -16,7 +16,6 @@ import androidx.core.graphics.createBitmap
 import androidx.core.graphics.toColorInt
 import androidx.core.graphics.withSave
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 import zed.rainxch.plscribbledash.core.data.utils.managers.DataStoreManager
@@ -26,7 +25,6 @@ import zed.rainxch.plscribbledash.game.domain.model.ParsedPath
 import zed.rainxch.plscribbledash.game.domain.model.PathData
 import zed.rainxch.plscribbledash.game.domain.repository.GameRepository
 import javax.inject.Inject
-import kotlin.math.ceil
 import kotlin.math.min
 import kotlin.math.sqrt
 
@@ -39,7 +37,7 @@ class GameRepositoryImpl @Inject constructor(
     override suspend fun earnCoin(
         score: Int,
         mode: DifficultyLevelOptions
-    ) {
+    ) : Int {
         val scoreInCoins = when(score) {
             in 0..39 -> 1
             in 40 .. 79 -> 2
@@ -50,7 +48,8 @@ class GameRepositoryImpl @Inject constructor(
 
         val scopeMultiplied = (scoreInCoins * mode.scoreMultiplier).toInt()
 
-        dataStoreManager.setCoins(dataStoreManager.coins.first() + scopeMultiplied)
+        dataStoreManager.addCoins(scopeMultiplied)
+        return scopeMultiplied
     }
 
     private fun parseDimensionValue(value: String): Int {

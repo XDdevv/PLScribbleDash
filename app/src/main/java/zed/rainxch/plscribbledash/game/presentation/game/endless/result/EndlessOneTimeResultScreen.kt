@@ -1,6 +1,5 @@
 package zed.rainxch.plscribbledash.game.presentation.game.endless.result
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,14 +23,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -44,9 +38,9 @@ import zed.rainxch.plscribbledash.core.presentation.components.DisplayLargeText
 import zed.rainxch.plscribbledash.core.presentation.components.GreenButton
 import zed.rainxch.plscribbledash.core.presentation.components.HeadlineLargeText
 import zed.rainxch.plscribbledash.core.presentation.components.LabelSmallText
-import zed.rainxch.plscribbledash.game.domain.model.toPath
+import zed.rainxch.plscribbledash.core.presentation.components.RowIconTextComponent
+import zed.rainxch.plscribbledash.game.presentation.components.PreviewPathCanvas
 import zed.rainxch.plscribbledash.game.presentation.components.ScaledDrawingCanvas
-import zed.rainxch.plscribbledash.game.presentation.components.drawGridLines
 import zed.rainxch.plscribbledash.game.presentation.game.endless.utils.EndlessGameState
 import zed.rainxch.plscribbledash.game.presentation.game.endless.vm.EndlessGameViewModel
 
@@ -111,41 +105,10 @@ fun EndlessOneTimeResultScreen(
                                 .background(Color.White)
                                 .padding(12.dp)
                         ) {
-                            Canvas(
-                                modifier = Modifier
-                                    .size(150.dp)
-                                    .background(Color(0xFFFFFFFF))
-                                    .clip(RoundedCornerShape(18.dp))
-                                    .clipToBounds()
-                                    .drawGridLines()
-                            ) {
-                                val canvasWidth = size.width
-                                val canvasHeight = size.height
-                                val previewPaths = state.previewPaths
-                                val scaleX = canvasWidth / previewPaths.viewportWidth.toFloat()
-                                val scaleY = canvasHeight / previewPaths.viewportHeight.toFloat()
-
-                                val scale = minOf(scaleX, scaleY)
-                                val scaledWidth = previewPaths.viewportWidth * scale
-                                val scaledHeight = previewPaths.viewportHeight * scale
-                                val translateX = (canvasWidth - scaledWidth) / 2f
-                                val translateY = (canvasHeight - scaledHeight) / 2f
-
-                                withTransform({
-                                    translate(left = translateX, top = translateY)
-                                    scale(scaleX = scale, scaleY = scale, pivot = Offset.Zero)
-                                }) {
-                                    val composePaths = previewPaths.paths.map { it.toPath() }
-
-                                    composePaths.forEachIndexed { index, path ->
-                                        drawPath(
-                                            path = path,
-                                            color = Color.Black,
-                                            style = Stroke(width = previewPaths.paths[index].strokeWidth)
-                                        )
-                                    }
-                                }
-                            }
+                            PreviewPathCanvas(
+                                parsedPath = state.previewPaths,
+                                modifier = Modifier.size(150.dp)
+                            )
                         }
                     }
 
@@ -210,10 +173,17 @@ fun EndlessOneTimeResultScreen(
                 align = TextAlign.Center
             )
 
+            Spacer(Modifier.height(24.dp))
+
+//            RowIconTextComponent(
+//                R.drawable.ic_coin,
+//                state.gainedCoins.toString()
+//            )
         }
 
         Column (
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .align(Alignment.BottomCenter),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

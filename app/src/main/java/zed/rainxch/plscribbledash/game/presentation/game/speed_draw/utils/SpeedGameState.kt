@@ -11,6 +11,7 @@ sealed class SpeedGameState {
         val averageScore: Int,
         val mehPlusCount: Int,
         val isMehPlusHighScore: Boolean,
-        val isAverageAccuracyHighScore: Boolean
+        val isAverageAccuracyHighScore: Boolean,
+        val coins: Int
     ) : SpeedGameState()
 }

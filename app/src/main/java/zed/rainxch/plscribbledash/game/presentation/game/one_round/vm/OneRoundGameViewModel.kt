@@ -29,7 +29,7 @@ import zed.rainxch.plscribbledash.game.presentation.game.one_round.utils.OneRoun
 import javax.inject.Inject
 
 @HiltViewModel
-class GameViewModel @Inject constructor(
+class OneRoundGameViewModel @Inject constructor(
     private val paintRepository: PaintRepository,
     private val gameRepository: GameRepository,
     private val getRandomPathDataUseCase: GetRandomPathDataUseCase,
@@ -164,7 +164,11 @@ class GameViewModel @Inject constructor(
                 exampleParsedPath = randomPath.value ?: ParsedPath(emptyList(), 0, 0, 0f, 0f),
                 difficultyLevelOption
             )
-            randomPath.value?.let { _gameState.emit(OneRoundGameState.FINISHED(score, it)) }
+            val coins = gameRepository.earnCoin(
+                score,
+                difficultyLevelOption
+            )
+            randomPath.value?.let { randomPath -> _gameState.emit(OneRoundGameState.FINISHED(score, randomPath, coins)) }
         }
     }
 

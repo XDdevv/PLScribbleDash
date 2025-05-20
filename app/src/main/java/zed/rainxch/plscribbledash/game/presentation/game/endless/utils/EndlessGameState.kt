@@ -11,13 +11,15 @@ sealed class EndlessGameState {
     data class RESULT(
         val score: Int,
         val previewPaths: ParsedPath,
-        val userDrawnPath: List<PaintPath>
+        val userDrawnPath: List<PaintPath>,
+        val gainedCoins: Int
     ) : EndlessGameState()
 
     data class FINISHED(
         val averageScore: Int,
         val mehPlusCount: Int,
         val isMehPlusHighScore: Boolean,
-        val isAverageAccuracyHighScore: Boolean
+        val isAverageAccuracyHighScore: Boolean,
+        val coins: Int
     ) : EndlessGameState()
 }

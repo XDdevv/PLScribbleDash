@@ -3,6 +3,7 @@ package zed.rainxch.plscribbledash.game.presentation.game.speed_draw.vm
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.geometry.Offset
@@ -97,6 +98,7 @@ class SpeedGameViewModel @Inject constructor(
     private var timerJob: Job? = null
     var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White))
     var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black))
+    var coins by mutableIntStateOf(0)
 
     init {
         getRandomPath()
@@ -232,6 +234,7 @@ class SpeedGameViewModel @Inject constructor(
                     _mehPlusCounter.value,
                     checkHighestMehPlusUseCase(_mehPlusCounter.value),
                     checkAverageAccuracyUseCase(_averageAccuracy.value),
+                    coins
                 )
             )
         }
@@ -244,6 +247,11 @@ class SpeedGameViewModel @Inject constructor(
                 exampleParsedPath = randomPath.value ?: ParsedPath(emptyList(), 0, 0, 0f, 0f),
                 difficultyLevelOption
             )
+            var coins = gameRepository.earnCoin(
+                score,
+                difficultyLevelOption
+            )
+            coins += coins
             onClear()
             _gameState.emit(SpeedGameState.PREVIEW)
             getRandomPath()

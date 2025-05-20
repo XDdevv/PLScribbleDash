@@ -212,7 +212,8 @@ fun EndlessGameScreen(
                             averageScore = state.averageScore,
                             mehPlusCount = state.mehPlusCount,
                             isMehPlusHighScore = state.isMehPlusHighScore,
-                            isAverageAccuracyHighScore = state.isAverageAccuracyHighScore
+                            isAverageAccuracyHighScore = state.isAverageAccuracyHighScore,
+                            coins = state.coins
                         )
                     )
                 )
@@ -224,7 +225,8 @@ fun EndlessGameScreen(
                     state = EndlessGameState.RESULT(
                         score = state.score,
                         previewPaths = state.previewPaths,
-                        userDrawnPath = state.userDrawnPath
+                        userDrawnPath = state.userDrawnPath,
+                        gainedCoins = state.gainedCoins
                     ),
                     onFinishClicked = {
                         viewModel.onFinishClick()

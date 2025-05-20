@@ -36,6 +36,7 @@ import zed.rainxch.plscribbledash.core.presentation.components.BodyMediumText
 import zed.rainxch.plscribbledash.core.presentation.components.DisplayLargeText
 import zed.rainxch.plscribbledash.core.presentation.components.HeadlineLargeText
 import zed.rainxch.plscribbledash.core.presentation.components.LabelSmallText
+import zed.rainxch.plscribbledash.core.presentation.components.RowIconTextComponent
 import zed.rainxch.plscribbledash.core.presentation.navigation.NavGraph
 import zed.rainxch.plscribbledash.game.domain.model.GameModeOptions
 import zed.rainxch.plscribbledash.game.domain.model.toPaintPath
@@ -83,7 +84,7 @@ fun OneRoundWonderGameScreen(
         Spacer(Modifier.height(84.dp))
 
         DisplayLargeText(
-            text = "${state.rate}%",
+            text = "${state.score}%",
             textColor = MaterialTheme.colorScheme.primary
         )
 
@@ -148,8 +149,8 @@ fun OneRoundWonderGameScreen(
 
         Spacer(Modifier.height(32.dp))
 
-        val title by remember { mutableStateOf(viewModel.getRandomTitle(state.rate)) }
-        val description by remember { mutableStateOf(viewModel.getRandomFeedback(state.rate)) }
+        val title by remember { mutableStateOf(viewModel.getRandomTitle(state.score)) }
+        val description by remember { mutableStateOf(viewModel.getRandomFeedback(state.score)) }
 
         HeadlineLargeText(
             text = title.asString(),
@@ -159,6 +160,11 @@ fun OneRoundWonderGameScreen(
             text = description.asString(),
             textColor = MaterialTheme.colorScheme.secondary,
             align = TextAlign.Center
+        )
+        Spacer(Modifier.height(16.dp))
+        RowIconTextComponent(
+            R.drawable.ic_coin,
+            state.coins.toString()
         )
         Spacer(Modifier.weight(1f))
         BlueButton(

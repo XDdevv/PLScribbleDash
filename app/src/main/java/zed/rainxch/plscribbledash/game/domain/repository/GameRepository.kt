@@ -12,5 +12,5 @@ interface GameRepository {
         difficultyLevelOption: DifficultyLevelOptions
     ): Int
 
-    suspend fun earnCoin(score: Int, mode: DifficultyLevelOptions)
+    suspend fun earnCoin(score: Int, mode: DifficultyLevelOptions) : Int
 }
