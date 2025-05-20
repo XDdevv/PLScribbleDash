@@ -10,5 +10,6 @@ data class ShopCanvasEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val canvas: ShopCanvas,
     val equipped: Boolean,
-    val bought: Boolean
+    val bought: Boolean,
+    val canvasName: String
 )

@@ -18,7 +18,8 @@ fun ShopPen.toSerializable(): SerializableShopPen {
                 this.color.toSerializableColor(),
                 this.penPrice,
                 this.penBought,
-                this.penEquipped
+                this.penEquipped,
+                penName = this.penName
             )
         }
 
@@ -27,7 +28,8 @@ fun ShopPen.toSerializable(): SerializableShopPen {
                 this.color.toSerializableColor(),
                 this.penPrice,
                 this.penBought,
-                this.penEquipped
+                this.penEquipped,
+                penName = this.penName
             )
         }
 
@@ -36,7 +38,8 @@ fun ShopPen.toSerializable(): SerializableShopPen {
                 this.colors.toSerializableColors(),
                 this.penPrice,
                 this.penBought,
-                this.penEquipped
+                this.penEquipped,
+                penName = this.penName
             )
         }
     }
@@ -45,15 +48,15 @@ fun ShopPen.toSerializable(): SerializableShopPen {
 fun SerializableShopPen.toDomain(): ShopPen {
     return when (this) {
         is SerializableShopPen.Basic -> {
-            ShopPen.Basic(color.toColor(), penBought = penBought, penEquipped = penEquipped, type = type)
+            ShopPen.Basic(color.toColor(), penBought = penBought, penEquipped = penEquipped, type = type, penName = penName)
         }
 
         is SerializableShopPen.Legendary -> {
-            ShopPen.Legendary(colors.map { it.toColor() }, penBought = penBought, penEquipped = penEquipped, type = type)
+            ShopPen.Legendary(colors.map { it.toColor() }, penBought = penBought, penEquipped = penEquipped, type = type, penName = penName)
         }
 
         is SerializableShopPen.Premium -> {
-            ShopPen.Premium(color.toColor(), penBought = penBought, penEquipped = penEquipped, type = type)
+            ShopPen.Premium(color.toColor(), penBought = penBought, penEquipped = penEquipped, type = type, penName = penName)
         }
     }
 }

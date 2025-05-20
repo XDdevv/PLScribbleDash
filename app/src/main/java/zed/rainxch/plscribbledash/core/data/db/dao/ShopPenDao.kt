@@ -2,13 +2,10 @@ package zed.rainxch.plscribbledash.core.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
-import zed.rainxch.plscribbledash.core.data.db.entity.ShopCanvasEntity
 import zed.rainxch.plscribbledash.core.data.db.entity.ShopPenEntity
-import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
 import zed.rainxch.plscribbledash.core.domain.model.ShopPen
 
 @Dao
@@ -41,6 +38,6 @@ interface ShopPenDao {
     @Query("DELETE from shop_pen")
     suspend fun clearPenList() : Int
 
-    @Query("SELECT * FROM shop_pen WHERE pen = :pen")
-    suspend fun getPenEntityByPen(pen : ShopPen) : ShopPenEntity
+    @Query("SELECT * FROM shop_pen WHERE penName = :penName")
+    suspend fun getPenEntityByPenName(penName: String) : ShopPenEntity
 }

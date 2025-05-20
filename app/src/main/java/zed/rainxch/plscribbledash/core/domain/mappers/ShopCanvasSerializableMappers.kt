@@ -10,7 +10,8 @@ fun ShopCanvas.toSerializable(): SerializableShopCanvas {
                 this.color.toSerializableColor(),
                 this.canvasPrice,
                 this.canvasBought,
-                this.canvasEquipped
+                this.canvasEquipped,
+                canvasName = this.canvasName
             )
         }
         is ShopCanvas.Legendary -> {
@@ -18,7 +19,8 @@ fun ShopCanvas.toSerializable(): SerializableShopCanvas {
                 this.imageRes,
                 this.canvasPrice,
                 this.canvasBought,
-                this.canvasEquipped
+                this.canvasEquipped,
+                canvasName = this.canvasName
             )
         }
         is ShopCanvas.Premium -> {
@@ -26,7 +28,8 @@ fun ShopCanvas.toSerializable(): SerializableShopCanvas {
                 this.color.toSerializableColor(),
                 this.canvasPrice,
                 this.canvasBought,
-                this.canvasEquipped
+                this.canvasEquipped,
+                canvasName = this.canvasName
             )
         }
     }
@@ -35,15 +38,15 @@ fun ShopCanvas.toSerializable(): SerializableShopCanvas {
 fun SerializableShopCanvas.toDomain(): ShopCanvas {
     return when (this) {
         is SerializableShopCanvas.Basic -> {
-            ShopCanvas.Basic(serializableColor.toColor(), canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type)
+            ShopCanvas.Basic(serializableColor.toColor(), canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type, canvasName = canvasName)
         }
 
         is SerializableShopCanvas.Legendary -> {
-            ShopCanvas.Legendary(imageRes, canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type)
+            ShopCanvas.Legendary(imageRes, canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type, canvasName = canvasName)
         }
 
         is SerializableShopCanvas.Premium -> {
-            ShopCanvas.Premium(serializableColor.toColor(), canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type)
+            ShopCanvas.Premium(serializableColor.toColor(), canvasPrice = price, canvasBought = bought, canvasEquipped = equipped, type = type, canvasName = canvasName)
         }
     }
 }

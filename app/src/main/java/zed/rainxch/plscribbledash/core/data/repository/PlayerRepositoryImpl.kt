@@ -57,31 +57,21 @@ class PlayerRepositoryImpl @Inject constructor(
     }
 
     override suspend fun setEquippedCanvas(canvas: ShopCanvas) {
-
+        val entity = shopCanvasDataSource.getCanvasEntityByCanvasName(canvas.canvasName)
         val equippedCanvas = shopCanvasDataSource.getEquippedCanvas()
-        if (equippedCanvas != null) {
-            shopCanvasDataSource.updateCanvas(equippedCanvas.copy(equipped = false))
-        } else {
-            println("erorr")
-        }
 
-        val entity = shopCanvasDataSource.getCanvasEntityByCanvas(canvas)
-        println(entity)
-        if (entity != null) {
-            shopCanvasDataSource.updateCanvas(entity.copy(equipped = true, bought = true))
-            dataStoreManager.setEquippedCanvasId(entity.id)
-        } else {
-            println("erorr")
-        }
+        dataStoreManager.setEquippedCanvasId(entity.id)
+        shopCanvasDataSource.updateCanvas(equippedCanvas.copy(equipped = false))
+        shopCanvasDataSource.updateCanvas(entity.copy(equipped = true, bought = true))
     }
 
     override suspend fun setEquippedPen(pen: ShopPen) {
+        val entity = shopPenDataSource.getPenEntityByPenName(pen.penName)
         val equippedPen = shopPenDataSource.getEquippedPen()
-        shopPenDataSource.updatePen(equippedPen.copy(equipped = false))
 
-        val entity = shopPenDataSource.getPenEntityByPen(pen)
-        shopPenDataSource.updatePen(entity.copy(equipped = true, bought = true))
         dataStoreManager.setEquippedPenId(entity.id)
+        shopPenDataSource.updatePen(equippedPen.copy(equipped = false))
+        shopPenDataSource.updatePen(entity.copy(equipped = true, bought = true))
     }
 
 }

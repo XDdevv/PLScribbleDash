@@ -10,5 +10,6 @@ data class ShopPenEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val pen: ShopPen,
     val equipped: Boolean,
-    val bought: Boolean
+    val bought: Boolean,
+    val penName: String
 )

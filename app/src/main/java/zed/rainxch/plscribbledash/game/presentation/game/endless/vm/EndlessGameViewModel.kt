@@ -77,8 +77,8 @@ class EndlessGameViewModel @Inject constructor(
     private var _randomPath: MutableStateFlow<ParsedPath?> = MutableStateFlow(null)
     val randomPath = _randomPath.asStateFlow()
 
-    var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White))
-    var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black))
+    var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White, canvasName = "basic First"))
+    var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black, penName = "Black"))
     var coins by mutableIntStateOf(0)
 
     init {

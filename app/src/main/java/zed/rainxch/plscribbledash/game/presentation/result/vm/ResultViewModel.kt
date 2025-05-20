@@ -19,8 +19,8 @@ import javax.inject.Inject
 class ResultViewModel @Inject constructor(
     private val playerRepository: PlayerRepository
 ) : ViewModel() {
-    var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White))
-    var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black))
+    var canvasBackground by mutableStateOf<ShopCanvas>(ShopCanvas.Basic(Color.White, canvasName = "basic First"))
+    var penColor by mutableStateOf<ShopPen>(ShopPen.Basic(Color.Black, penName = "Black"))
 
     init {
         getEquippedCanvas()

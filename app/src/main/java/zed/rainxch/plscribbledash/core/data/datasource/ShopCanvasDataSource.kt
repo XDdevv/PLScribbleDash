@@ -34,8 +34,7 @@ class ShopCanvasDataSource @Inject constructor(
         shopDao.getCanvasCount()
     }
 
-    suspend fun getCanvasEntityByCanvas(canvas: ShopCanvas) =
-        shopDao.getCanvasEntityByCanvas(canvas)
+    suspend fun getCanvasEntityByCanvasName(name: String) = shopDao.getCanvasEntityByCanvasName(name)
 
     suspend fun insertCanvases() {
         shopDao.insertAllCanvases(shopCanvasList.map { it.toShopEntity() })
@@ -45,7 +44,7 @@ class ShopCanvasDataSource @Inject constructor(
 
     fun canvasCount() = shopDao.getCanvasCount()
 
-    suspend fun getEquippedCanvas() : ShopCanvasEntity? {
+    suspend fun getEquippedCanvas() : ShopCanvasEntity {
         return shopDao.getEquippedCanvas()
     }
 

@@ -10,7 +10,8 @@ fun ShopCanvasEntity.toShopCanvas(): ShopCanvas {
                 canvas.color,
                 canvas.canvasPrice,
                 bought, equipped,
-                type = canvas.type
+                type = canvas.type,
+                canvasName = canvas.canvasName
             )
         }
 
@@ -19,7 +20,8 @@ fun ShopCanvasEntity.toShopCanvas(): ShopCanvas {
                 canvas.imageRes,
                 canvas.canvasPrice,
                 bought, equipped,
-                type = canvas.type
+                type = canvas.type,
+                canvasName = canvas.canvasName
             )
         }
 
@@ -28,7 +30,8 @@ fun ShopCanvasEntity.toShopCanvas(): ShopCanvas {
                 canvas.color,
                 canvas.canvasPrice,
                 bought, equipped,
-                type = canvas.type
+                type = canvas.type,
+                canvasName = canvas.canvasName
             )
         }
     }
@@ -40,7 +43,8 @@ fun ShopCanvas.toShopEntity(): ShopCanvasEntity {
             ShopCanvasEntity(
                 canvas = this,
                 equipped = this.canvasEquipped,
-                bought = this.canvasBought
+                bought = this.canvasBought,
+                canvasName = this.canvasName
             )
         }
 
@@ -48,7 +52,8 @@ fun ShopCanvas.toShopEntity(): ShopCanvasEntity {
             ShopCanvasEntity(
                 canvas = this,
                 equipped = this.canvasEquipped,
-                bought = this.canvasBought
+                bought = this.canvasBought,
+                canvasName = this.canvasName
             )
         }
 
@@ -56,7 +61,8 @@ fun ShopCanvas.toShopEntity(): ShopCanvasEntity {
             ShopCanvasEntity(
                 canvas = this,
                 equipped = this.canvasEquipped,
-                bought = this.canvasBought
+                bought = this.canvasBought,
+                canvasName = this.canvasName
             )
         }
     }

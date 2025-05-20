@@ -34,7 +34,7 @@ class ShopPenDataSource @Inject constructor(
         return shopDao.getEquippedPen()
     }
 
-    suspend fun getPenEntityByPen(pen: ShopPen) = shopDao.getPenEntityByPen(pen)
+    suspend fun getPenEntityByPenName(penName: String) = shopDao.getPenEntityByPenName(penName)
 
     suspend fun updatePen(pen: ShopPenEntity) {
         shopDao.updatePen(pen)

@@ -10,6 +10,7 @@ sealed class ShopPen(
     val penColor: Color
 ) {
     abstract val type: String
+    abstract val penName: String
 
     data class Basic(
         val color: Color,
@@ -17,6 +18,7 @@ sealed class ShopPen(
         val penBought: Boolean = false,
         val penEquipped: Boolean = false,
         override val type: String = "Basic",
+        override val penName: String
     ) : ShopPen(penPrice, penBought, penEquipped, color)
 
     data class Premium(
@@ -25,6 +27,7 @@ sealed class ShopPen(
         val penBought: Boolean = false,
         val penEquipped: Boolean = false,
         override val type: String = "Premium",
+        override val penName: String
     ) : ShopPen(penPrice, penBought, penEquipped, color)
 
     data class Legendary(
@@ -33,6 +36,7 @@ sealed class ShopPen(
         val penBought: Boolean = false,
         val penEquipped: Boolean = false,
         override val type: String = "Legendary",
+        override val penName: String
     ) : ShopPen(penPrice, penBought, penEquipped, Color.Black) {
         fun brush() = Brush.linearGradient(colors)
     }
