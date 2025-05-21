@@ -50,7 +50,7 @@ This app is more than just fun — it's **cleanly architected** and follows mode
 
 ## 🎥 Demo
 
-[> _Insert GIF or screen recording here (optional)_](https://github.com/XDdevv/PLScribbleDash/blob/master/Screen_recording_20250521_120157%20(2).gif)
+(https://github.com/XDdevv/PLScribbleDash/blob/master/Screen_recording_20250521_120157%20(2).gif)
 
 ---
 
