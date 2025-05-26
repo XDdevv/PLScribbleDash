@@ -20,9 +20,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import zed.rainxch.plscribbledash.R
-import zed.rainxch.plscribbledash.core.presentation.components.BodySmallText
-import zed.rainxch.plscribbledash.core.presentation.components.HeadlineLargeText
-import zed.rainxch.plscribbledash.core.presentation.ui.theme.PLScribbleDashTheme
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.BodySmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.HeadlineLargeText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.theme.PLScribbleDashTheme
 import zed.rainxch.plscribbledash.statistics.presentation.models.Statistic
 import zed.rainxch.plscribbledash.statistics.presentation.models.StatisticsType
 

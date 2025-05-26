@@ -2,26 +2,21 @@ package zed.rainxch.plscribbledash.game.domain.use_case
 
 import zed.rainxch.plscribbledash.R
 import zed.rainxch.plscribbledash.game.domain.model.ParsedPath
-import zed.rainxch.plscribbledash.game.domain.repository.GameRepository
+import zed.rainxch.plscribbledash.game.domain.utils.VectorDrawableParser
 import javax.inject.Inject
 
 class GetRandomPathDataUseCase @Inject constructor(
-    private val gameRepository: GameRepository
+    private val vectorDrawableParser: VectorDrawableParser
 ) {
     operator fun invoke(): ParsedPath {
         return getPathDataList().random()
     }
 
     private fun getPathDataList(): List<ParsedPath> {
-        val resources = getResources()
-        val resultList = mutableListOf<ParsedPath>()
-        resources.forEach { resId ->
-            val pathData = gameRepository.getPathData(resId)
-            resultList.add(pathData)
+        return getResources().map { resId ->
+            vectorDrawableParser.getPathData(resId)
         }
-        return resultList
     }
-
 
     private fun getResources(): List<Int> {
         return listOf(

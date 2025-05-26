@@ -20,7 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import zed.rainxch.plscribbledash.R
-import zed.rainxch.plscribbledash.core.presentation.components.HeadlineXSmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.HeadlineXSmallText
 
 @Composable
 fun NewScoreImageText(

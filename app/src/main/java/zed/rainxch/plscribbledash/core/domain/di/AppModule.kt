@@ -23,12 +23,13 @@ import zed.rainxch.plscribbledash.statistics.data.repository.StatisticsRepositor
 import zed.rainxch.plscribbledash.statistics.presentation.utils.DominantColorExtractor
 import javax.inject.Singleton
 import androidx.datastore.preferences.preferencesDataStoreFile
-import zed.rainxch.plscribbledash.core.data.datasource.ShopCanvasDataSource
 import zed.rainxch.plscribbledash.core.data.db.dao.ShopCanvasDao
 import zed.rainxch.plscribbledash.core.data.db.dao.ShopPenDao
 import zed.rainxch.plscribbledash.core.data.repository.PlayerRepositoryImpl
 import zed.rainxch.plscribbledash.core.data.utils.managers.DataStoreManager
 import zed.rainxch.plscribbledash.core.domain.repository.PlayerRepository
+import zed.rainxch.plscribbledash.shop.data.ShopRepositoryImpl
+import zed.rainxch.plscribbledash.shop.domain.ShopRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -57,6 +58,12 @@ abstract class AppModule {
     abstract fun bindPlayerRepository(
         impl: PlayerRepositoryImpl
     ): PlayerRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindShopRepository(
+        impl: ShopRepositoryImpl
+    ): ShopRepository
 
     companion object {
         @Provides
@@ -89,11 +96,6 @@ abstract class AppModule {
         @Provides
         @Singleton
         fun provideShopPenDao(appDatabase: AppDatabase): ShopPenDao = appDatabase.shopPenDao
-
-        @Provides
-        @Singleton
-        fun provideShopCanvasDataSource(shopCanvasDao: ShopCanvasDao) =
-            ShopCanvasDataSource(shopCanvasDao)
 
         @Provides
         @Singleton

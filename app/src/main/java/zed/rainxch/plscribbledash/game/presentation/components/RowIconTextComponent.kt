@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
@@ -21,8 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import zed.rainxch.plscribbledash.R
-import zed.rainxch.plscribbledash.core.presentation.components.HeadlineXSmallText
-import zed.rainxch.plscribbledash.core.presentation.ui.theme.PLScribbleDashTheme
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.HeadlineXSmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.theme.PLScribbleDashTheme
 
 @Composable
 fun RowIconTextComponent(

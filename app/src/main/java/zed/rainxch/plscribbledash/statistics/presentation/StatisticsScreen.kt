@@ -16,7 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import zed.rainxch.plscribbledash.core.presentation.components.LabelXLargeText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.LabelXLargeText
 import zed.rainxch.plscribbledash.statistics.presentation.components.StatisticsItem
 import zed.rainxch.plscribbledash.statistics.presentation.vm.StatisticsViewModel
 

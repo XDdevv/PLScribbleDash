@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import zed.rainxch.plscribbledash.main.presentation.components.AppNavigation
 import zed.rainxch.plscribbledash.main.presentation.components.BottomNavBar
 import zed.rainxch.plscribbledash.main.presentation.vm.MainViewModel
-import zed.rainxch.plscribbledash.core.presentation.ui.theme.PLScribbleDashTheme
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.theme.PLScribbleDashTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

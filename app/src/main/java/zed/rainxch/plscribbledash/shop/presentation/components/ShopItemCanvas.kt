@@ -32,8 +32,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import zed.rainxch.plscribbledash.R
 import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
-import zed.rainxch.plscribbledash.core.presentation.components.HeadlineSmallText
-import zed.rainxch.plscribbledash.core.presentation.components.LabelSmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.HeadlineSmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.LabelSmallText
 
 @Composable
 fun ShopItemCanvas(

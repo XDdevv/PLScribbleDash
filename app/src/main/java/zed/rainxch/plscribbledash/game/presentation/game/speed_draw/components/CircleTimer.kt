@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import zed.rainxch.plscribbledash.core.presentation.components.HeadlineXSmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.HeadlineXSmallText
 import zed.rainxch.plscribbledash.game.presentation.game.speed_draw.utils.TimeUI
 
 const val WARNING_TIME_SECONDS = 30

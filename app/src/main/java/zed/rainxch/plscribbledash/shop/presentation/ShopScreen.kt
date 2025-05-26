@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import zed.rainxch.plscribbledash.R
-import zed.rainxch.plscribbledash.core.presentation.components.LabelXLargeText
-import zed.rainxch.plscribbledash.core.presentation.ui.theme.PLScribbleDashTheme
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.LabelXLargeText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.theme.PLScribbleDashTheme
 import zed.rainxch.plscribbledash.game.presentation.components.RowIconTextComponent
 import zed.rainxch.plscribbledash.shop.presentation.components.ShopItemsPager
 import zed.rainxch.plscribbledash.shop.presentation.vm.ShopViewModel

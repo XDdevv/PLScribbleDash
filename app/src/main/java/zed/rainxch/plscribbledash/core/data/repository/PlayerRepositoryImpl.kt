@@ -4,8 +4,8 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import zed.rainxch.plscribbledash.core.data.datasource.ShopCanvasDataSource
-import zed.rainxch.plscribbledash.core.data.datasource.ShopPenDataSource
+import zed.rainxch.plscribbledash.core.data.db.dao.ShopCanvasDao
+import zed.rainxch.plscribbledash.core.data.db.dao.ShopPenDao
 import zed.rainxch.plscribbledash.core.data.utils.managers.DataStoreManager
 import zed.rainxch.plscribbledash.core.data.utils.mappers.toShopCanvas
 import zed.rainxch.plscribbledash.core.data.utils.mappers.toShopPen
@@ -17,8 +17,8 @@ import javax.inject.Inject
 
 class PlayerRepositoryImpl @Inject constructor(
     private val dataStoreManager: DataStoreManager,
-    private val shopCanvasDataSource: ShopCanvasDataSource,
-    private val shopPenDataSource: ShopPenDataSource,
+    private val shopDao: ShopCanvasDao,
+    private val penDao: ShopPenDao,
 ) : PlayerRepository {
     override fun getUserCoins(): Flow<Int> {
         return dataStoreManager.coins
@@ -34,13 +34,13 @@ class PlayerRepositoryImpl @Inject constructor(
 
     override suspend fun getEquippedPen(): ShopPen {
         val penId = dataStoreManager.equippedPenId.first()
-        val pen = shopPenDataSource.getPenById(penId).first()
+        val pen = penDao.getPenById(penId).first()
         return pen.toShopPen()
     }
 
     override suspend fun getEquippedCanvas(): ShopCanvas {
         val canvasId = dataStoreManager.equippedCanvasId.first()
-        val canvas = shopCanvasDataSource.getCanvasById(canvasId).first()
+        val canvas = shopDao.getCanvasById(canvasId).first()
         return canvas.toShopCanvas()
     }
 
@@ -57,21 +57,21 @@ class PlayerRepositoryImpl @Inject constructor(
     }
 
     override suspend fun setEquippedCanvas(canvas: ShopCanvas) {
-        val entity = shopCanvasDataSource.getCanvasEntityByCanvasName(canvas.canvasName)
-        val equippedCanvas = shopCanvasDataSource.getEquippedCanvas()
+        val entity = shopDao.getCanvasEntityByCanvasName(canvas.canvasName)
+        val equippedCanvas = shopDao.getEquippedCanvas()
 
         dataStoreManager.setEquippedCanvasId(entity.id)
-        shopCanvasDataSource.updateCanvas(equippedCanvas.copy(equipped = false))
-        shopCanvasDataSource.updateCanvas(entity.copy(equipped = true, bought = true))
+        shopDao.updateCanvas(equippedCanvas.copy(equipped = false))
+        shopDao.updateCanvas(entity.copy(equipped = true, bought = true))
     }
 
     override suspend fun setEquippedPen(pen: ShopPen) {
-        val entity = shopPenDataSource.getPenEntityByPenName(pen.penName)
-        val equippedPen = shopPenDataSource.getEquippedPen()
+        val entity = penDao.getPenEntityByPenName(pen.penName)
+        val equippedPen = penDao.getEquippedPen()
 
         dataStoreManager.setEquippedPenId(entity.id)
-        shopPenDataSource.updatePen(equippedPen.copy(equipped = false))
-        shopPenDataSource.updatePen(entity.copy(equipped = true, bought = true))
+        penDao.updatePen(equippedPen.copy(equipped = false))
+        penDao.updatePen(entity.copy(equipped = true, bought = true))
     }
 
 }

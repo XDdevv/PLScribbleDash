@@ -2,22 +2,25 @@ package zed.rainxch.plscribbledash.main.domain
 
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import zed.rainxch.plscribbledash.core.data.datasource.ShopCanvasDataSource
-import zed.rainxch.plscribbledash.core.data.datasource.ShopPenDataSource
+import zed.rainxch.plscribbledash.core.data.datasource.static_.shopCanvasList
+import zed.rainxch.plscribbledash.core.data.datasource.static_.shopPenList
+import zed.rainxch.plscribbledash.core.data.db.dao.ShopCanvasDao
+import zed.rainxch.plscribbledash.core.data.db.dao.ShopPenDao
+import zed.rainxch.plscribbledash.core.data.utils.mappers.toShopEntity
 import javax.inject.Inject
 
 class InitializeShopUseCase @Inject constructor(
-    private val canvasDataSource: ShopCanvasDataSource,
-    private val penDataSource: ShopPenDataSource,
+    private val canvasDao: ShopCanvasDao,
+    private val penDao: ShopPenDao,
 ) {
 
     suspend operator fun invoke() = coroutineScope {
-        val canvasCount = canvasDataSource.canvasCount()
-        val penCount = penDataSource.penCount()
+        val canvasCount = canvasDao.getCanvasCount()
+        val penCount = penDao.getPenCount()
 
         if (canvasCount <= 0 && penCount <= 0) {
-            launch { canvasDataSource.insertCanvases() }
-            launch { penDataSource.insertPens() }
+            launch { canvasDao.insertAllCanvases(shopCanvasList.map { it.toShopEntity() }) }
+            launch { penDao.insertAllPens(shopPenList.map { it.toShopEntity() }) }
         }
     }
 }

@@ -24,9 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import zed.rainxch.plscribbledash.R
-import zed.rainxch.plscribbledash.core.presentation.components.BodyMediumText
-import zed.rainxch.plscribbledash.core.presentation.components.DisplayMediumText
-import zed.rainxch.plscribbledash.core.presentation.components.HeadlineMediumText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.BodyMediumText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.DisplayMediumText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.HeadlineMediumText
 import zed.rainxch.plscribbledash.core.presentation.navigation.NavGraph
 import zed.rainxch.plscribbledash.game.data.datasource.getGameModes
 import zed.rainxch.plscribbledash.game.presentation.components.RowIconTextComponent

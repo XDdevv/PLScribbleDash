@@ -27,8 +27,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithCache
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
@@ -39,8 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import zed.rainxch.plscribbledash.R
 import zed.rainxch.plscribbledash.core.domain.model.ShopPen
-import zed.rainxch.plscribbledash.core.presentation.components.HeadlineSmallText
-import zed.rainxch.plscribbledash.core.presentation.components.LabelSmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.HeadlineSmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.LabelSmallText
 
 @Composable
 fun ShopItemPen(

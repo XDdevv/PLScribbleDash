@@ -23,8 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import zed.rainxch.plscribbledash.R
-import zed.rainxch.plscribbledash.core.presentation.components.BodyMediumText
-import zed.rainxch.plscribbledash.core.presentation.components.DisplayMediumText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.BodyMediumText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.DisplayMediumText
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 import zed.rainxch.plscribbledash.game.domain.model.GameModeOptions
 import zed.rainxch.plscribbledash.game.data.datasource.getDifficultyLevels

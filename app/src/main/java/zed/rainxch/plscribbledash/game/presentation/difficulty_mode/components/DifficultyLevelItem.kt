@@ -20,7 +20,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import zed.rainxch.plscribbledash.core.presentation.components.LabelMediumText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.LabelMediumText
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelItem
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 

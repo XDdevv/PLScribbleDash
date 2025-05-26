@@ -33,11 +33,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import zed.rainxch.plscribbledash.R
-import zed.rainxch.plscribbledash.core.presentation.components.DisplayMediumText
-import zed.rainxch.plscribbledash.core.presentation.components.GreenButton
-import zed.rainxch.plscribbledash.core.presentation.components.HeadlineMediumText
-import zed.rainxch.plscribbledash.core.presentation.components.IconButtonMedium
-import zed.rainxch.plscribbledash.core.presentation.components.LabelSmallText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.DisplayMediumText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.GreenButton
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.HeadlineMediumText
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.IconButtonMedium
+import zed.rainxch.plscribbledash.core.presentation.desingsystem.components.LabelSmallText
 import zed.rainxch.plscribbledash.core.presentation.navigation.NavGraph
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 import zed.rainxch.plscribbledash.game.domain.model.toStringDTO

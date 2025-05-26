@@ -10,23 +10,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import zed.rainxch.plscribbledash.core.data.datasource.ShopCanvasDataSource
-import zed.rainxch.plscribbledash.core.data.datasource.ShopPenDataSource
 import zed.rainxch.plscribbledash.core.domain.model.CoinOperators
 import zed.rainxch.plscribbledash.core.domain.model.ShopCanvas
 import zed.rainxch.plscribbledash.core.domain.model.ShopPen
 import zed.rainxch.plscribbledash.core.domain.repository.PlayerRepository
+import zed.rainxch.plscribbledash.shop.domain.ShopRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class ShopViewModel @Inject constructor(
-    private val canvasDataSource: ShopCanvasDataSource,
-    private val penDataSource: ShopPenDataSource,
+    private val shopRepository: ShopRepository,
     private val playerRepository: PlayerRepository
 ) : ViewModel() {
-    fun getCanvasList() = canvasDataSource.getShopCanvasList()
+    fun getCanvasList() = shopRepository.getCanvasList()
 
-    fun getPenList() = penDataSource.getPenList()
+    fun getPenList() = shopRepository.getPenList()
 
     val coins = playerRepository.getUserCoins()
 

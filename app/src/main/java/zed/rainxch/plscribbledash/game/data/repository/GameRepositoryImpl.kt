@@ -29,7 +29,6 @@ import kotlin.math.min
 import kotlin.math.sqrt
 
 class GameRepositoryImpl @Inject constructor(
-    private val context: Context,
     private val dataStoreManager: DataStoreManager
 ) : GameRepository {
 
@@ -50,119 +49,6 @@ class GameRepositoryImpl @Inject constructor(
 
         dataStoreManager.addCoins(scopeMultiplied)
         return scopeMultiplied
-    }
-
-    private fun parseDimensionValue(value: String): Int {
-        if (value.isEmpty()) return 0
-
-        try {
-            if (value.startsWith("@")) {
-                val resourceId = value.substring(1).toIntOrNull() ?: 0
-                return context.resources.getDimensionPixelSize(resourceId)
-            }
-
-            if (value.all { it.isDigit() }) {
-                return value.toInt()
-            }
-
-            val numericPart = value.takeWhile { it.isDigit() || it == '.' }
-            val unit = value.substring(numericPart.length)
-
-            val numericValue = numericPart.toFloatOrNull() ?: return 0
-
-            return when (unit) {
-                "dp", "dip" -> (numericValue * context.resources.displayMetrics.density).toInt()
-                "sp" -> (numericValue * context.resources.displayMetrics.scaledDensity).toInt()
-                "px" -> numericValue.toInt()
-                "in" -> (numericValue * context.resources.displayMetrics.xdpi).toInt()
-                "mm" -> (numericValue * context.resources.displayMetrics.xdpi / 25.4f).toInt()
-                "pt" -> (numericValue * context.resources.displayMetrics.xdpi / 72f).toInt()
-                "" -> numericValue.toInt() // Assume pixels if no unit specified
-                else -> 0 // Unknown unit
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return 0
-        }
-    }
-
-    override fun getPathData(drawableResId: Int): ParsedPath {
-        val parser = context.resources.getXml(drawableResId)
-
-        val paths = mutableListOf<PathData>()
-        var width = 0
-        var height = 0
-        var viewportWidth = 0f
-        var viewportHeight = 0f
-
-        try {
-            var eventType = parser.eventType
-
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                when (eventType) {
-                    XmlPullParser.START_TAG -> {
-                        when (parser.name) {
-                            "vector" -> {
-                                // Parse vector attributes
-                                for (i in 0 until parser.attributeCount) {
-                                    val attrName = parser.getAttributeName(i)
-                                    val attrValue = parser.getAttributeValue(i)
-
-                                    when (attrName) {
-                                        "width" -> width = parseDimensionValue(attrValue)
-                                        "height" -> height = parseDimensionValue(attrValue)
-                                        "viewportWidth" -> viewportWidth = attrValue.toFloat()
-                                        "viewportHeight" -> viewportHeight = attrValue.toFloat()
-                                    }
-                                }
-                            }
-
-                            "path" -> {
-                                // Parse path attributes
-                                var pathData = ""
-                                var strokeWidth = 0f
-                                var fillColor = ""
-                                var strokeColor = ""
-
-                                for (i in 0 until parser.attributeCount) {
-                                    val attrName = parser.getAttributeName(i)
-                                    val attrValue = parser.getAttributeValue(i)
-
-                                    when (attrName) {
-                                        "pathData" -> pathData = attrValue
-                                        "strokeWidth" -> strokeWidth = attrValue.toFloat()
-                                        "fillColor" -> fillColor = attrValue
-                                        "strokeColor" -> strokeColor = attrValue
-                                    }
-                                }
-
-                                paths.add(
-                                    PathData(
-                                        pathData,
-                                        strokeWidth,
-                                        fillColor,
-                                        strokeColor
-                                    )
-                                )
-                            }
-                        }
-                    }
-                }
-                eventType = parser.next()
-            }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            parser.close()
-        }
-        return ParsedPath(
-            paths = paths,
-            width = width,
-            height = height,
-            viewportWidth = viewportWidth,
-            viewportHeight = viewportHeight
-        )
     }
 
     override suspend fun getResultScore(

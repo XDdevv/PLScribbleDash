@@ -5,7 +5,6 @@ import zed.rainxch.plscribbledash.game.domain.model.ParsedPath
 import zed.rainxch.plscribbledash.game.domain.model.DifficultyLevelOptions
 
 interface GameRepository {
-    fun getPathData(drawableResId: Int): ParsedPath
     suspend fun getResultScore(
         userPaths: List<PaintPath>,
         exampleParsedPath: ParsedPath,
