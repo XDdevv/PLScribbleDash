@@ -1,6 +1,6 @@
 # 🎨 Scribble Dash – Drawing Game App (Jetpack Compose)
 
-**Scribble Dash** is a feature-rich Android drawing game built entirely with **Jetpack Compose**, designed as part of the **Mobile Dev Campus Main App Challenge** by [Philipp Lackner](https://pl-coding.com/campus). The goal: turn your screen into a creative playground — while applying serious software engineering best practices.
+**Scribble Dash** is a feature-rich Android drawing game built entirely with **Jetpack Compose**, designed as part of the **Mobile Dev Campus Main App Challenge** by [Philipp Lackner](https://pl-coding.com/campus).
 
 ---
 
@@ -80,6 +80,6 @@ Special thanks to [Philipp Lackner](https://pl-coding.com/campus) and the **Mobi
 ---
 
 **Check about project in social media**  
-📎 [Linkedin](https://www.linkedin.com/posts/usmon-narzullayev-457873294_androiddev-jetpackcompose-kotlin-activity-7330851382771511298-BCJI?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEdRrcMBy0zilWTdbz75n9PJiSv3bMOxoYg)
+📎 [Linkedin](https://www.linkedin.com/posts/usmon-narzullayev-457873294_androiddev-jetpackcompose-kotlin-activity-7330851382771511298-BCJI?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEd...)
 
 ---
