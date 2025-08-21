@@ -71,14 +71,6 @@ screen title._
 - Modularization and clean project architecture
 - Jetpack Compose best practices for real-world apps
 
----
-
-## 🎥 Demo
-
-_Add a GIF or video demo here if available!_
-
----
-
 ## 🛠️ Getting Started
 
 1. **Clone the repository:**
