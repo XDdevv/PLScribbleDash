@@ -46,7 +46,7 @@
 
 | ![Game Result](screenshots/game_result_screen.jpg) | ![Endless Mode Result](screenshots/game_result_endless_mode_screen.jpg) |
 |:--:|:--:|
-| *Result Screen (Normal)* | *Result Screen (Endless Mode)* |
+| *Result Screen (Endless Mode)* | *Result Screen (Normal)* |
 
 | ![Statistics](screenshots/statistics_screen.jpg) | ![Shop: Drawboard](screenshots/shop_drawboard_screen.jpg) |
 |:--:|:--:|
