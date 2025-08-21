@@ -70,12 +70,6 @@
 
 ---
 
-## 🎥 Demo
-
-_Add a GIF or video demo here if available!_
-
----
-
 ## 🛠️ Getting Started
 
 1. **Clone the repository:**
