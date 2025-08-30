@@ -91,8 +91,7 @@ See [LICENSE](LICENSE) for full details.
 
 ## 🤝 Connect
 
-- [Email](mailto:undefineduser087@gmail.com)
-- [Email2](mailto:rainxchzed@gmail.com)
+[![Email](https://img.shields.io/badge/Email-rainxch.dev@gmail.com-181A18?style=for-the-badge&logo=gmail)](mailto:rainxch.dev@gmail.com)
 
 ---
 
