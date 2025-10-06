@@ -1,6 +1,6 @@
-# 🎨 PLScribbleDash
+# 🎨 Scribble Dash
 
-**PLScribbleDash** is a modern, feature-rich Android drawing game app built entirely with Jetpack
+**Scribble Dash** is a modern, feature-rich Android drawing game app built entirely with Jetpack
 Compose, inspired by the Mobile Dev Campus Main App Challenge
 by [Philipp Lackner](https://pl-coding.com/campus).
 
@@ -75,7 +75,7 @@ screen title._
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/XDdevv/PLScribbleDash.git
+   git clone https://github.com/XDdevv/Scribble Dash.git
    ```
 2. **Open in Android Studio (Giraffe or newer).**
 3. **Sync Gradle and Run.**
