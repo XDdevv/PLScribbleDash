@@ -75,7 +75,7 @@ screen title._
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/XDdevv/Scribble Dash.git
+   git clone https://github.com/rainxchzed/Scribble Dash.git
    ```
 2. **Open in Android Studio (Giraffe or newer).**
 3. **Sync Gradle and Run.**
